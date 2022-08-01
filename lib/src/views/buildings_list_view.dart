@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+
+import '../models/list_building_model.dart';
+import '../network/api_client.dart';
+import '../widgets/building_list/building_list_card.dart';
+
+
+class BuildingsListView extends StatefulWidget {
+  const BuildingsListView({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<BuildingsListView> createState() => _BuildingsListViewState();
+}
+
+class _BuildingsListViewState extends State<BuildingsListView> {
+  late Future<List<ListBuildingModel>> _listBuildings;
+
+  Future<List<ListBuildingModel>> _getListBuildingsData() async {
+    List<ListBuildingModel> buildings = (await ApiService().getBuildings());
+    await Future.delayed(const Duration(milliseconds: 500));
+    return Future.value(buildings);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _listBuildings = _getListBuildingsData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<ListBuildingModel>>(
+      future: _listBuildings,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var buildings = snapshot.data!;
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return _buildListView(buildings);
+            default:
+              return _buildLoadingScreen();
+          }
+        } else {
+          return _buildLoadingScreen();
+        }
+      },
+    );
+  }
+
+  Widget _buildListView(List<ListBuildingModel> buildings) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return BuildingListCard(listBuilding: buildings[index]);
+        },
+        itemCount: buildings.length,
+      );
+    }
+
+    Widget _buildLoadingScreen() {
+      return const Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+}
