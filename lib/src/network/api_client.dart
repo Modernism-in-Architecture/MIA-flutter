@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:mia/src/network/constants.dart';
 import 'package:mia/src/models/list_building_model.dart';
@@ -23,6 +24,7 @@ class ApiService {
           headers: _header,
       );
       if (response.statusCode == 200) {
+        log("API CALL MADE");
         var jsonResponse = json.decode(response.body);
         List<dynamic> data = jsonResponse["data"];
         return data.map((buildings) => ListBuildingModel.fromJson(buildings)).toList();
@@ -33,3 +35,5 @@ class ApiService {
     return listBuildings;
   }
 }
+
+final apiProvider = Provider<ApiService>((ref) => ApiService());
