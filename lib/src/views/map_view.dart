@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MapView extends StatefulWidget {
-  const MapView({Key? key, required this.title}) : super(key: key);
-  final String title;
+class MapView extends ConsumerStatefulWidget {
+  const MapView({Key? key}) : super(key: key);
 
   @override
-  State <MapView> createState() => _MapState();
+  MapViewState createState() => MapViewState();
 }
 
-class _MapState extends State<MapView> {
+class MapViewState extends ConsumerState<MapView> {
   @override
   Widget build(BuildContext context) {
     return Column(

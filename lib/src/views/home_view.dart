@@ -1,100 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/src/views/architects_list_view.dart';
 import 'package:mia/src/views/map_view.dart';
-
+import '../../main.dart';
+import '../widgets/custom_search_bar.dart';
+import '../widgets/custom_title_bar.dart';
 import 'buildings_list_view.dart';
 
 
-class HomeView extends StatefulWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  HomeViewState createState() => HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
 
-  int _selectedIndex = 0;
+class HomeViewState extends ConsumerState<HomeView> {
 
-  static const List<Widget> _views = <Widget>[
-    BuildingsListView(title: "Buildings"),
-    MapView(title: "Places"),
-    ArchitectsListView(title: "Architects")
+  final List<Widget> _views = <Widget>[
+    const BuildingsListView(),
+    const MapView(),
+    const ArchitectsListView()
   ];
 
-  Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-            width: 40,
-            child: Image.asset("lib/assets/images/mia-logo.png")
-        ),
-        Container(
-            padding: const EdgeInsets.all(6.0),
-            child: const Text("MIA")
-        )
-      ]
-  );
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onBottomNavbarItemTapped(int index) {
+    ref.read(selectedViewIndex.notifier).state = index;
+    final viewIndex = ref.watch(selectedViewIndex);
+    ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
   }
 
   @override
   Widget build(BuildContext context) {
+    final viewIndex = ref.watch(selectedViewIndex);
+    final titleBarIcon = ref.watch(appBarIcon);
+
     return Scaffold(
         appBar: AppBar(
-          title: customSearchBar,
+          title: ref.read(appBarType),
           actions: [
             IconButton(
               onPressed: () {
-                setState(() {
-                  if (customIcon.icon == Icons.search) {
-                    customIcon = const Icon(Icons.cancel);
-                    customSearchBar = const ListTile(
-                      leading: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                      title: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
+                  if (titleBarIcon.icon == Icons.search) {
+                    ref.read(appBarIcon.notifier).state = const Icon(Icons.cancel);
+                    ref.read(appBarType.notifier).state = const CustomSearchBar();
                   } else {
-                    customIcon = const Icon(Icons.search);
-                    customSearchBar = Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              width: 40,
-                              child: Image.asset("lib/assets/images/mia-logo.png")
-                          ),
-                          Container(
-                              padding: const EdgeInsets.all(6.0),
-                              child: const Text("MIA")
-                          )
-                        ]
-                    );
+                    ref.read(appBarIcon.notifier).state = const Icon(Icons.search);
+                    ref.read(appBarType.notifier).state = const CustomTitleBar();
                   }
-                });
               },
-              icon: customIcon,
+              icon: titleBarIcon,
             ),
           ],
           backgroundColor: Colors.black,
@@ -114,11 +70,11 @@ class _HomeViewState extends State<HomeView> {
               label: 'Architects',
             ),
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: viewIndex,
           selectedItemColor: Colors.blue[800],
-          onTap: _onItemTapped,
+          onTap: _onBottomNavbarItemTapped,
         ),
-        body: _views[_selectedIndex]
+        body: _views[viewIndex]
     );
   }
 }

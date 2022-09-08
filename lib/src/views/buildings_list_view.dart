@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/list_building_model.dart';
 import '../network/api_client.dart';
 import '../widgets/building_list/building_list_card.dart';
 
 
-class BuildingsListView extends StatefulWidget {
-  const BuildingsListView({Key? key, required this.title}) : super(key: key);
-  final String title;
+class BuildingsListView extends ConsumerStatefulWidget {
+  const BuildingsListView({Key? key}) : super(key: key);
 
   @override
-  State<BuildingsListView> createState() => _BuildingsListViewState();
+  BuildingsListViewState createState() => BuildingsListViewState();
 }
 
-class _BuildingsListViewState extends State<BuildingsListView> {
+class BuildingsListViewState extends ConsumerState<BuildingsListView> {
   late Future<List<ListBuildingModel>> _listBuildings;
 
   Future<List<ListBuildingModel>> _getListBuildingsData() async {

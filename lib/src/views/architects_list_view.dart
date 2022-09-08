@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ArchitectsListView extends StatefulWidget {
-  const ArchitectsListView({Key? key, required this.title}) : super(key: key);
-  final String title;
+class ArchitectsListView extends ConsumerStatefulWidget {
+  const ArchitectsListView({Key? key}) : super(key: key);
 
   @override
-  State<ArchitectsListView> createState() => _ArchitectsListState();
+  ArchitectsListViewState createState() => ArchitectsListViewState();
 }
 
-class _ArchitectsListState extends State<ArchitectsListView> {
+class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   @override
   Widget build(BuildContext context) {
     return Column(
