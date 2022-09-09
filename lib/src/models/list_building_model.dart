@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import '../helpers.dart';
+
 List<ListBuildingModel> listBuildingModelFromJson(List dynamic) =>
     List<ListBuildingModel>.from(dynamic.map((building) => ListBuildingModel.fromJson(building)));
 
@@ -26,12 +30,12 @@ class ListBuildingModel {
   factory ListBuildingModel.fromJson(Map<String, dynamic> json) =>
       ListBuildingModel(
         id: json["id"],
-        name: json["name"],
-        city: json["city"],
-        country: json["country"],
+        name: convertToUTF8(json["name"]),
+        city: convertToUTF8(json["city"]),
+        country: convertToUTF8(json["country"]),
         latitude: json["latitude"],
         longitude: json["longitude"],
-        buildingType: json["buildingType"],
+        buildingType: convertToUTF8(json["buildingType"]),
         feedImage: json["feedImage"],
       );
 }

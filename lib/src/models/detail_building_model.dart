@@ -1,3 +1,5 @@
+import '../helpers.dart';
+
 class DetailBuildingModel {
   DetailBuildingModel({
     required this.id,
@@ -45,22 +47,22 @@ class DetailBuildingModel {
   factory DetailBuildingModel.fromJson(Map<String, dynamic> json) =>
       DetailBuildingModel(
         id: json["id"],
-        name: json["name"],
+        name: convertToUTF8(json["name"]),
         yearOfConstruction: json["yearOfConstruction"],
         isProtected: json["isProtected"],
-        address: json["address"],
+        address: convertToUTF8(json["address"]),
         zipCode: json["zipCode"],
-        city: json["city"],
-        country: json["country"],
+        city: convertToUTF8(json["city"]),
+        country: convertToUTF8(json["country"]),
         latitude: json["latitude"].toDouble(),
         longitude: json["longitude"].toDouble(),
         galleryImages: List<String>.from(json["galleryImages"].map((x) => x)),
-        subtitle: json["subtitle"],
-        todaysUse: json["todaysUse"],
-        buildingType: json["buildingType"],
-        history: json["history"],
-        description: json["description"],
-        directions: json["directions"],
+        subtitle: convertToUTF8(json["subtitle"]),
+        todaysUse: convertToUTF8(json["todaysUse"]),
+        buildingType: convertToUTF8(json["buildingType"]),
+        history: convertToUTF8(json["history"]),
+        description: convertToUTF8(json["description"]),
+        directions: convertToUTF8(json["directions"]),
         architects: List<Architect>.from(json["architects"].map((x) => Architect.fromJson(x))),
         absoluteURL: json["absoluteURL"],
       );
