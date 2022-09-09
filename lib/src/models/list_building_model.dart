@@ -7,6 +7,8 @@ class ListBuildingModel {
     required this.name,
     required this.city,
     required this.country,
+    required this.latitude,
+    required this.longitude,
     required this.buildingType,
     required this.feedImage,
   });
@@ -15,6 +17,8 @@ class ListBuildingModel {
   String name;
   String city;
   String country;
+  double latitude;
+  double longitude;
   String buildingType;
   String feedImage;
 
@@ -25,6 +29,8 @@ class ListBuildingModel {
         name: json["name"],
         city: json["city"],
         country: json["country"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         buildingType: json["buildingType"],
         feedImage: json["feedImage"],
       );
