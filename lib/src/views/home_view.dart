@@ -37,8 +37,29 @@ class HomeViewState extends ConsumerState<HomeView> {
     final titleBarIcon = ref.watch(appBarIcon);
 
     return Scaffold(
+
+        bottomNavigationBar: BottomNavigationBar(
+           items: const <BottomNavigationBarItem>[
+             BottomNavigationBarItem(
+               icon: Icon(CupertinoIcons.building_2_fill),
+               label: 'Buildings',
+             ),
+             BottomNavigationBarItem(
+               icon: Icon(CupertinoIcons.map),
+               label: 'Places',
+             ),
+             BottomNavigationBarItem(
+               icon: Icon(CupertinoIcons.person_2_fill),
+               label: 'Architects',
+             ),
+           ],
+           currentIndex: viewIndex,
+           selectedItemColor: Colors.blue[800],
+           onTap: _onBottomNavbarItemTapped,
+        ),
+
         appBar: AppBar(
-          title: ref.read(appBarType),
+          title: ref.watch(appBarType),
           actions: [
             IconButton(
               onPressed: () {
@@ -55,26 +76,7 @@ class HomeViewState extends ConsumerState<HomeView> {
           ],
           backgroundColor: Colors.black,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.building_2_fill),
-              label: 'Buildings',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.map),
-              label: 'Places',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_2_fill),
-              label: 'Architects',
-            ),
-          ],
-          currentIndex: viewIndex,
-          selectedItemColor: Colors.blue[800],
-          onTap: _onBottomNavbarItemTapped,
-        ),
-        body: _views[viewIndex]
+        body: _views[viewIndex],
     );
   }
 }

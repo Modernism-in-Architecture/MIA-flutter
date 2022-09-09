@@ -30,7 +30,6 @@ final buildingsListDataProvider = FutureProvider<List<ListBuildingModel>>((ref) 
 });
 
 
-
 Future<void> main() async {
   await dotenv.load();
   runApp(
@@ -39,6 +38,7 @@ Future<void> main() async {
       ),
   );
 }
+
 
 class Mia extends HookConsumerWidget {
   const Mia({Key? key}) : super(key: key);

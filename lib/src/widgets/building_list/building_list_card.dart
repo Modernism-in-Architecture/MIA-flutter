@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/list_building_model.dart';
+import '../../views/building_detail_view.dart';
 
 class BuildingListCard extends StatelessWidget{
   const BuildingListCard({Key? key, this.listBuilding}) : super(key: key);
@@ -10,7 +11,14 @@ class BuildingListCard extends StatelessWidget{
     return Column(
         children: [
           GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BuildingDetailView(buildingId: listBuilding!.id),
+                  ),
+                );
+              },
               child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 370,
@@ -69,8 +77,5 @@ class BuildingListCard extends StatelessWidget{
           )
         ]);
   }
-
-
-
 
 }
