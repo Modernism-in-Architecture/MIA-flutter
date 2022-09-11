@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mia/src/widgets/building_details/detail_map.dart';
 import 'package:mia/src/widgets/building_details/gallery_grid.dart';
 import 'package:mia/src/widgets/building_details/header_image.dart';
 import 'package:mia/src/widgets/building_details/section_text_content.dart';
@@ -42,8 +43,9 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
 
             final locationSection = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SectionHeader(title: "LOCATION"),
+                children: [
+                  const SectionHeader(title: "LOCATION"),
+                  DetailMap(latitude: snapshot.data!.latitude, longitude: snapshot.data!.longitude)
                 ]
             );
 
