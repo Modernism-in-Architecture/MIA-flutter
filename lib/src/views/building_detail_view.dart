@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mia/src/widgets/building_details/gallery_grid_view.dart';
+import 'package:mia/src/widgets/building_details/gallery_grid.dart';
 import 'package:mia/src/widgets/building_details/header_image.dart';
 import 'package:mia/src/widgets/building_details/section_text_content.dart';
 import 'package:mia/src/widgets/loading_screen.dart';
@@ -51,7 +51,7 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SectionHeader(title: "IMPRESSIONS"),
-                  GalleryGridView(galleryImages: snapshot.data!.galleryImages)
+                  GalleryGrid(galleryImages: snapshot.data!.galleryImages)
                 ]
             );
 

@@ -23,7 +23,7 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,7 +33,7 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
                 child:Row(
                   children: [
                   IconButton(
-                    icon: const Icon(Icons.cancel),
+                    icon: const Icon(Icons.cancel, color: Colors.white),
                     onPressed: () {Navigator.pop(context);}
                   )],
                 )
@@ -102,7 +102,7 @@ List<Widget> indicators(imagesLength, currentIndex) {
       width: 10,
       height: 10,
       decoration: BoxDecoration(
-          color: currentIndex == index ? Colors.black : Colors.black26,
+          color: currentIndex == index ? Colors.white : Colors.white24,
           shape: BoxShape.circle),
     );
   });

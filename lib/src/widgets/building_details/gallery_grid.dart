@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mia/src/widgets/building_details/gallery_carousel.dart';
 
 
-class GalleryGridView extends StatelessWidget{
-  const GalleryGridView({Key? key, required this.galleryImages}) : super(key: key);
+class GalleryGrid extends StatelessWidget{
+  const GalleryGrid({Key? key, required this.galleryImages}) : super(key: key);
   final List<String> galleryImages;
 
   @override
@@ -28,12 +28,18 @@ class GalleryGridView extends StatelessWidget{
               ),
             );
           },
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                galleryImages[index],
-                fit: BoxFit.cover,
-              ),
+          child: Card(
+            elevation: 3,
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  galleryImages[index],
+                  fit: BoxFit.cover,
+                ),
+            )
           )
         );
       },
