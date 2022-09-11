@@ -38,6 +38,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^2.0.0-dev.9
   html: ^0.15.0
+  flutter_map: ^2.2.0
 
 dev_dependencies:
   flutter_test:
