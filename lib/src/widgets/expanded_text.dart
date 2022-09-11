@@ -5,7 +5,7 @@ class ExpandedText extends StatefulWidget {
   final String content;
 
   @override
-  _ExpandedTextState createState() => _ExpandedTextState();
+  State<ExpandedText> createState() => _ExpandedTextState();
 }
 
 class _ExpandedTextState extends State<ExpandedText> {
@@ -17,7 +17,7 @@ class _ExpandedTextState extends State<ExpandedText> {
   void initState() {
     super.initState();
     if (widget.content.length > 150) {
-      firstPart = widget.content.substring(0, 150);
+      firstPart = "${widget.content.substring(0, 150)}...";
       secondPart = widget.content.substring(151, widget.content.length);
     } else {
       firstPart = widget.content;
