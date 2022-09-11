@@ -19,7 +19,7 @@ class CustomTitleBar extends ConsumerWidget{
               child: Image.asset("lib/assets/images/mia-logo.png")
           ),
           Container(
-              padding: const EdgeInsets.all(6.0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               alignment: Alignment.center,
               child: Text(
                   title
