@@ -28,7 +28,7 @@ class BuildingListCard extends StatelessWidget{
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       children: [
