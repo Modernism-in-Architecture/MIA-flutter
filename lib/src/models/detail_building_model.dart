@@ -82,8 +82,8 @@ class Architect {
 
   factory Architect.fromJson(Map<String, dynamic> json) => Architect(
     id: json["id"],
-    lastName: json["lastName"],
-    firstName: json["firstName"],
+    lastName:  convertToUTF8(json["lastName"]),
+    firstName:  convertToUTF8(json["firstName"]),
   );
 
 }
