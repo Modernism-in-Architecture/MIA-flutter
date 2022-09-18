@@ -20,12 +20,10 @@ class _DetailMapState extends State<DetailMap> {
   Widget build(BuildContext context) {
     final markers = <Marker>[
       Marker(
-        width: 80.0,
-        height: 80.0,
         point: LatLng(widget.latitude, widget.longitude),
         builder: (ctx) => const Icon(
           Icons.location_on,
-          color: Colors.red,
+          color: Colors.blue,
           size: 35.0,
         ),
       ),
@@ -50,7 +48,7 @@ class _DetailMapState extends State<DetailMap> {
                 TileLayerOptions(
                   urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: ['a', 'b', 'c'],
-                  userAgentPackageName: 'dev.leaflet.flutter_map.example',
+                  userAgentPackageName: 'org.architecture-in-modernism',
                 ),
                 MarkerLayerOptions(markers: markers),
               ],
