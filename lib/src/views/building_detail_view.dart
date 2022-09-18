@@ -6,7 +6,7 @@ import 'package:mia/src/widgets/building_details/header_image.dart';
 import 'package:mia/src/widgets/building_details/section_text_content.dart';
 import 'package:mia/src/widgets/loading_screen.dart';
 import '../models/detail_building_model.dart';
-import '../network/api_client.dart';
+import '../network/mia_api_client.dart';
 import '../widgets/building_details/section_header.dart';
 import 'package:html/parser.dart' show parse;
 
@@ -24,7 +24,7 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
   late Future<DetailBuildingModel> building;
 
   Future<DetailBuildingModel> _getBuildingDetails(buildingId) async{
-    return ref.read(apiProvider).getBuildingDetails(buildingId);
+    return ref.read(miaApiProvider).getBuildingDetails(buildingId);
   }
 
   @override

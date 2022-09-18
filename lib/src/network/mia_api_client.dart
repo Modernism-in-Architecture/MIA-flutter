@@ -15,7 +15,7 @@ Map<String, String> _header = <String, String>{
   "Authorization": "Token $miaApiToken"
 };
 
-class ApiService {
+class MiaApiService {
   Future<List<ListBuildingModel>> getBuildings() async {
     late Future<List<ListBuildingModel>> listBuildings = [] as Future<List<ListBuildingModel>>;
     try {
@@ -56,4 +56,4 @@ class ApiService {
   }
 }
 
-final apiProvider = Provider<ApiService>((ref) => ApiService());
+final miaApiProvider = Provider<MiaApiService>((ref) => MiaApiService());
