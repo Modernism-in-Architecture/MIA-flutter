@@ -137,7 +137,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 children: <Widget>[
                   detailSection,
                   if (snapshot.data!.description.isNotEmpty) descriptionSection,
-                  relatedBuildingsSection,
+                  if (snapshot.data!.relatedBuildings.isNotEmpty)relatedBuildingsSection,
                 ],
               )
           );
