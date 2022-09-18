@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mia/src/models/list_architect_model.dart';
 import 'package:mia/src/models/list_building_model.dart';
 import 'package:mia/src/network/mia_api_client.dart';
 import 'package:mia/src/views/home_view.dart';
@@ -27,6 +28,10 @@ final appBarType = StateProvider<Widget>((ref) {
 
 final buildingsListDataProvider = FutureProvider<List<ListBuildingModel>>((ref) async {
   return ref.read(miaApiProvider).getBuildings();
+});
+
+final architectsListDataProvider = FutureProvider<List<ListArchitectModel>>((ref) async {
+  return ref.read(miaApiProvider).getArchitects();
 });
 
 
