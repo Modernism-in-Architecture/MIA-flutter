@@ -12,6 +12,7 @@ class ListBuildingsView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(14, 7, 14, 7),
       itemBuilder: (context, index) {
         return BuildingListCard(listBuilding: listBuildings[index]);
       },

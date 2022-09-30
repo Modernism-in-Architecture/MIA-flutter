@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:html/parser.dart';
 import 'package:mia/src/models/list_building_model.dart';
@@ -70,7 +71,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 Row(
                     children: [
                       if (snapshot.data!.birthDay.isNotEmpty) const Icon(
-                        Icons.favorite_border_outlined,
+                        CupertinoIcons.heart_circle,
                         color: Colors.black,
                         size: 20,
                       ),
@@ -85,7 +86,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 Row(
                     children: [
                       if (snapshot.data!.birthDay.isNotEmpty) const Icon(
-                        Icons.heart_broken_outlined,
+                        CupertinoIcons.heart_slash_circle,
                         color: Colors.black,
                         size: 20,
                       ),
@@ -111,7 +112,6 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
 
           final relatedBuildingsSection = Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 const SectionHeader(title: "RELATED BUILDINGS"),
                 SizedBox(
@@ -137,7 +137,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 children: <Widget>[
                   detailSection,
                   if (snapshot.data!.description.isNotEmpty) descriptionSection,
-                  if (snapshot.data!.relatedBuildings.isNotEmpty)relatedBuildingsSection,
+                  if (snapshot.data!.relatedBuildings.isNotEmpty) relatedBuildingsSection,
                 ],
               )
           );

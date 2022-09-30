@@ -24,7 +24,6 @@ class BuildingListCard extends StatelessWidget{
                   height: 370,
                   child: Card(
                     elevation: 5,
-                    margin: const EdgeInsets.fromLTRB(14, 7, 14, 7),
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shape: RoundedRectangleBorder(

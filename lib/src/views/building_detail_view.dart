@@ -160,8 +160,8 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   children: <Widget>[
                     detailSection,
                     if (snapshot.data!.architects.isNotEmpty) architectsSection,
-                    if (snapshot.data!.history.isNotEmpty) historySection,
                     if (snapshot.data!.description.isNotEmpty) descriptionSection,
+                    if (snapshot.data!.history.isNotEmpty) historySection,
                     locationSection,
                     impressionsSection,
                   ],

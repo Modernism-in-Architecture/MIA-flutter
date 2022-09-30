@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,7 +9,7 @@ class CustomSearchBar extends StatelessWidget{
   Widget build(BuildContext context) {
     return const ListTile(
       leading: Icon(
-        Icons.search,
+        CupertinoIcons.search,
         color: Colors.white,
         size: 28,
       ),

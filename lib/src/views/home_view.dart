@@ -63,11 +63,11 @@ class HomeViewState extends ConsumerState<HomeView> {
           actions: [
             IconButton(
               onPressed: () {
-                  if (titleBarIcon.icon == Icons.search) {
-                    ref.read(appBarIcon.notifier).state = const Icon(Icons.cancel);
+                  if (titleBarIcon.icon == CupertinoIcons.search) {
+                    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
                     ref.read(appBarType.notifier).state = const CustomSearchBar();
                   } else {
-                    ref.read(appBarIcon.notifier).state = const Icon(Icons.search);
+                    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.search);
                     ref.read(appBarType.notifier).state = const CustomTitleBar();
                   }
               },
