@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/main.dart';
+import 'package:mia/src/models/list_architect_model.dart';
 
 import '../widgets/loading_screen.dart';
 import 'architect_detail_view.dart';
@@ -16,38 +17,11 @@ class ArchitectsListView extends ConsumerStatefulWidget {
 class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   String _letter = "A";
   String _oldLetter = "A";
+  int posSelected = 0;
   late List listArchitects;
+  late List _alphabet;
   final ScrollController _controller = ScrollController();
   final _itemSizeHeight = 65.0;
-  int posSelected = 0;
-  final List _alphabet = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z'
-  ];
 
   @override
   void initState() {
@@ -62,6 +36,7 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
 
     return listArchitects.when(
         data: (listArchitects) {
+            _collectFirstLetters(listArchitects);
             return LayoutBuilder(
                 builder: (context, constraints) {
                     return Stack(
@@ -120,6 +95,7 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   }
 
   _getAlphabetLetter(int index, List listArchitects) {
+
       return Expanded(
           child: Container(
               width: 40,
@@ -170,5 +146,15 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
         }
 
     }
+  }
+
+  _collectFirstLetters(List listArchitects) {
+    Set firstLetters = {};
+
+    for ( ListArchitectModel architect in listArchitects ) {
+      firstLetters.add(architect.lastName[0].toUpperCase());
+    }
+
+    _alphabet = firstLetters.toList();
   }
 }
