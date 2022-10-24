@@ -28,8 +28,8 @@ class BuildingsListViewState extends ConsumerState<BuildingsListView> {
         for (var building in buildings) {
           if (
             building.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
-            building.city.toLowerCase().contains(searchQuery.toLowerCase()) ||
-            building.country.toLowerCase().contains(searchQuery.toLowerCase())
+            building.city.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+            building.country.toLowerCase().startsWith(searchQuery.toLowerCase())
           ){
             resultBuildings.add(building)
           }

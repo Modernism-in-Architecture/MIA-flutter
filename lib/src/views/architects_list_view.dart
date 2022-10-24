@@ -33,65 +33,144 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   Widget build(BuildContext context) {
 
     final listArchitects = ref.watch(architectsListDataProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
+    List<ListArchitectModel> resultArchitects = [];
 
-    return listArchitects.when(
-        data: (listArchitects) {
-            _collectFirstLetters(listArchitects);
-            return LayoutBuilder(
-                builder: (context, constraints) {
-                    return Stack(
-                        children: [
-                            ListView.builder(
-                                itemCount: listArchitects.length,
-                                controller: _controller,
-                                itemExtent: _itemSizeHeight,
-                                itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ArchitectDetailView(architectId: listArchitects[index].id),
-                                            ),
-                                          );
-                                         },
-                                        child:Card(
-                                            child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Column (
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Text(listArchitects[index].lastName, style: const TextStyle(fontSize: 16)),
-                                                          if (listArchitects[index].firstName != "") const Text(", "),
-                                                          Text(listArchitects[index].firstName, style: const TextStyle(fontSize: 16))
-                                                        ]
-                                                      )
-                                                    ]
-                                                )
-                                            )
-                                        )
-                                    );
-                                }
-                            ),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  color: Colors.transparent,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [...List.generate(_alphabet.length, (index) => _getAlphabetLetter(index, listArchitects))],
-                                  ),
-                                ),
-                              ),
-                        ]
+    if (searchQuery.isNotEmpty) {
+      listArchitects.whenData((architects) => {
+        for (var architect in architects) {
+          if (
+            architect.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+                architect.firstName.toLowerCase().startsWith(searchQuery.toLowerCase())
+             ){
+            resultArchitects.add(architect)
+          }
+        }
+      });
+      if (resultArchitects.isNotEmpty) {
+        return ListView.builder(
+            itemCount: resultArchitects.length,
+            controller: _controller,
+            itemExtent: _itemSizeHeight,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ArchitectDetailView(
+                                architectId: resultArchitects[index]
+                                    .id),
+                      ),
                     );
-                },
-            );
-      },
-      error: (err, s) => Text(err.toString()),
-      loading: () => const LoadingScreen(),
-    );
+                  },
+                  child: Card(
+                      child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                              children: [
+                                Row(
+                                    children: [
+                                      Text(resultArchitects[index]
+                                          .lastName,
+                                          style: const TextStyle(
+                                              fontSize: 16)),
+                                      if (resultArchitects[index]
+                                          .firstName !=
+                                          "") const Text(", "),
+                                      Text(resultArchitects[index]
+                                          .firstName,
+                                          style: const TextStyle(
+                                              fontSize: 16))
+                                    ]
+                                )
+                              ]
+                          )
+                      )
+                  )
+              );
+            }
+        );
+      } else {
+        return const Center(
+            child: Text("Sorry, no results")
+        );
+      }
+    } else {
+      return listArchitects.when(
+        data: (listArchitects) {
+          _collectFirstLetters(listArchitects);
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return Stack(
+                  children: [
+                    ListView.builder(
+                        itemCount: listArchitects.length,
+                        controller: _controller,
+                        itemExtent: _itemSizeHeight,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ArchitectDetailView(
+                                            architectId: listArchitects[index]
+                                                .id),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                          children: [
+                                            Row(
+                                                children: [
+                                                  Text(listArchitects[index]
+                                                      .lastName,
+                                                      style: const TextStyle(
+                                                          fontSize: 16)),
+                                                  if (listArchitects[index]
+                                                      .firstName !=
+                                                      "") const Text(", "),
+                                                  Text(listArchitects[index]
+                                                      .firstName,
+                                                      style: const TextStyle(
+                                                          fontSize: 16))
+                                                ]
+                                            )
+                                          ]
+                                      )
+                                  )
+                              )
+                          );
+                        }
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [...List.generate(
+                              _alphabet.length, (index) =>
+                              _getAlphabetLetter(index, listArchitects))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]
+              );
+            },
+          );
+        },
+        error: (err, s) => Text(err.toString()),
+        loading: () => const LoadingScreen(),
+      );
+    }
   }
 
   _getAlphabetLetter(int index, List listArchitects) {
