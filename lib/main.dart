@@ -18,6 +18,10 @@ final selectedViewIndex = StateProvider<int>((ref) {
   return 0;
 });
 
+final searchQueryProvider = StateProvider<String>((ref) {
+  return "";
+});
+
 final appBarIcon = StateProvider<Icon>((ref) {
   return const Icon(Icons.search);
 });

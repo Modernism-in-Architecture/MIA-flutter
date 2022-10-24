@@ -69,6 +69,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                   } else {
                     ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.search);
                     ref.read(appBarType.notifier).state = const CustomTitleBar();
+                    ref.read(searchQueryProvider.notifier).state = "";
                   }
               },
               icon: titleBarIcon,
