@@ -22,11 +22,16 @@ class BuildingsListViewState extends ConsumerState<BuildingsListView> {
     final searchQuery = ref.watch(searchQueryProvider);
     List<ListBuildingModel> resultBuildings = [];
 
-    if (searchQuery.isNotEmpty) {
+    if (listBuildings.isLoading) {
+      return const LoadingScreen();
+    }
 
-      listBuildings.whenData((buildings) => {
+    // ToDo: Add error handling
+
+    listBuildings.whenData((buildings) => {
         for (var building in buildings) {
           if (
+            searchQuery.isEmpty ||
             building.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
             building.city.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
             building.country.toLowerCase().startsWith(searchQuery.toLowerCase())
@@ -34,24 +39,15 @@ class BuildingsListViewState extends ConsumerState<BuildingsListView> {
             resultBuildings.add(building)
           }
         }
-      });
+    });
 
-      if (resultBuildings.isNotEmpty) {
-        return ListBuildingsView(listBuildings: resultBuildings);
-      } else {
+    if (resultBuildings.isEmpty) {
         return const Center(
             child: Text("Sorry, no results")
         );
-      }
-
-    } else {
-      return listBuildings.when(
-        data: (listBuildings) {
-          return ListBuildingsView(listBuildings: listBuildings);
-        },
-        error: (err, s) => Text(err.toString()),
-        loading: () => const LoadingScreen(),
-      );
     }
+
+    return ListBuildingsView(listBuildings: resultBuildings);
+
   }
 }
