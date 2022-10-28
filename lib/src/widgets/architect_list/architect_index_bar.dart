@@ -60,9 +60,7 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
               _letter = _alphabet[letterIndex];
               if (_letter != _oldLetter) {
                 for (var i = 0; i < resultArchitects.length; i++) {
-                  if (_letter
-                      .toString()
-                      .compareTo(resultArchitects[i].lastName.toString().toUpperCase()[0]) == 0) {
+                  if (_letter.toString().compareTo(resultArchitects[i].lastName.toString().toUpperCase()[0]) == 0) {
                     widget.scrollController.animateTo(
                         i * widget.itemSizeHeight,
                         curve: Curves.linear,

@@ -17,17 +17,9 @@ class ArchitectListCard extends StatelessWidget{
                 children: [
                   Row(
                       children: [
-                        Text(architectList[architectIndex]
-                            .lastName,
-                            style: const TextStyle(
-                                fontSize: 16)),
-                        if (architectList[architectIndex]
-                            .firstName !=
-                            "") const Text(", "),
-                        Text(architectList[architectIndex]
-                            .firstName,
-                            style: const TextStyle(
-                                fontSize: 16))
+                        Text(architectList[architectIndex].lastName, style: const TextStyle(fontSize: 16)),
+                        if (architectList[architectIndex].firstName != "") const Text(", "),
+                        Text(architectList[architectIndex].firstName, style: const TextStyle(fontSize: 16))
                       ]
                   )
                 ]

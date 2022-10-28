@@ -10,6 +10,8 @@ import '../network/mia_api_client.dart';
 import '../widgets/building_details/section_header.dart';
 import 'package:html/parser.dart' show parse;
 
+import 'architect_detail_view.dart';
+
 class BuildingDetailView extends ConsumerStatefulWidget {
   const BuildingDetailView({Key? key, required this.buildingId}) : super(key: key);
   final int buildingId;
@@ -81,23 +83,30 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Column(
                           children: [
-                            for ( var architect in snapshot.data!.architects) Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    architect.firstName,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  const Text(" "),
-                                  Text(
-                                    architect.lastName,
-                                    style: const TextStyle(fontSize: 16),
-                                  )
+                            for ( var architect in snapshot.data!.architects)
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ArchitectDetailView(
+                                        architectId: architect.id
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "${architect.firstName} ${architect.lastName}",
+                                      style: const TextStyle(fontSize: 16, decoration: TextDecoration.underline),
+                                    ),
                                 ]
+                              )
                             )
                           ]
                       )
-                    ),
+                    )
                   ]
               );
 
@@ -178,7 +187,8 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
               ),
               appBar: AppBar(title: Text(snapshot.data!.name), backgroundColor: Colors.black,),
             );
-          } else if (snapshot.hasError) {
+          }
+          else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
           return const LoadingScreen();
