@@ -63,7 +63,11 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
                   if (_letter
                       .toString()
                       .compareTo(resultArchitects[i].lastName.toString().toUpperCase()[0]) == 0) {
-                    widget.scrollController.jumpTo(i * widget.itemSizeHeight);
+                    widget.scrollController.animateTo(
+                        i * widget.itemSizeHeight,
+                        curve: Curves.linear,
+                        duration: const Duration (milliseconds: 500)
+                    );
                     setState(() {
                       posSelected = letterIndex;
                     });
