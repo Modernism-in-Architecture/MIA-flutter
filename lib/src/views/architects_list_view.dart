@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/main.dart';
@@ -18,12 +17,6 @@ class ArchitectsListView extends ConsumerStatefulWidget {
 class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   final ScrollController _controller = ScrollController();
   static const itemSizeHeight = 65.0;
-
-  @override
-  void initState() {
-    _controller.addListener(_scrollListener);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +50,6 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-
         return Stack(
             children: [
               ArchitectNameList(
@@ -74,19 +66,5 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
         );
       },
     );
-  }
-
-  _scrollListener() {
-    if ((_controller.offset) >= (_controller.position.maxScrollExtent)) {
-        if (kDebugMode) {
-          print("reached bottom");
-        }
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-        if (kDebugMode) {
-          print("reached top");
-        }
-    }
   }
 }
