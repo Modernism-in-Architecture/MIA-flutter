@@ -48,7 +48,7 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
     _alphabet = firstLetters.toList();
   }
 
-  _getAlphabetLetter(int index, List resultArchitects) {
+  _getAlphabetLetter(int letterIndex, List resultArchitects) {
 
     return Expanded(
         child: Container(
@@ -57,7 +57,7 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () {
-              _letter = _alphabet[index];
+              _letter = _alphabet[letterIndex];
               if (_letter != _oldLetter) {
                 for (var i = 0; i < resultArchitects.length; i++) {
                   if (_letter
@@ -65,7 +65,7 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
                       .compareTo(resultArchitects[i].lastName.toString().toUpperCase()[0]) == 0) {
                     widget.scrollController.jumpTo(i * widget.itemSizeHeight);
                     setState(() {
-                      posSelected = index;
+                      posSelected = letterIndex;
                     });
                     break;
                   }
@@ -74,8 +74,8 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
               }
             },
             child: Text(
-              _alphabet[index],
-              style: (index == posSelected)
+              _alphabet[letterIndex],
+              style: (letterIndex == posSelected)
                   ? const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)
                   : const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
             ),
