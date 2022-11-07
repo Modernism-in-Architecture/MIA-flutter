@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mia/main.dart';
 import '../../models/list_building_model.dart';
 import '../../views/building_detail_view.dart';
 
@@ -12,11 +13,16 @@ class BuildingListCard extends StatelessWidget{
         children: [
           GestureDetector(
               onTap: () {
+                // Navigator.pushNamed(
+                //   context,
+                //   RoutesName.buildingDetailPage,
+                //   arguments: listBuilding!.id
+                // )
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => BuildingDetailView(buildingId: listBuilding!.id),
-                  ),
+                  )
                 );
               },
               child: SizedBox(
