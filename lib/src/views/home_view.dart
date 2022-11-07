@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/src/views/architects_list_view.dart';
 import 'package:mia/src/views/map_view.dart';
 import '../../main.dart';
+import '../helpers.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/custom_title_bar.dart';
 import 'buildings_list_view.dart';
@@ -16,7 +17,6 @@ class HomeView extends ConsumerStatefulWidget {
   HomeViewState createState() => HomeViewState();
 }
 
-
 class HomeViewState extends ConsumerState<HomeView> {
 
   final List<Widget> _views = <Widget>[
@@ -25,19 +25,26 @@ class HomeViewState extends ConsumerState<HomeView> {
     const ArchitectsListView()
   ];
 
-  void _onBottomNavbarItemTapped(int index) {
-    ref.read(selectedViewIndex.notifier).state = index;
-    final viewIndex = ref.watch(selectedViewIndex);
-    ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserLocation().then((userLocation) {
+      if (userLocation != null) {
+        ref.read(mapLocation.notifier).state = MapLocation(
+            latitude: userLocation.latitude, longitude: userLocation.longitude
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final viewIndex = ref.watch(selectedViewIndex);
     final titleBarIcon = ref.watch(appBarIcon);
+    final globalScaffold = ref.watch(scaffoldHomeViewKey);
+    print(globalScaffold);
 
     return Scaffold(
-
         bottomNavigationBar: BottomNavigationBar(
            items: const <BottomNavigationBarItem>[
              BottomNavigationBarItem(
@@ -57,7 +64,6 @@ class HomeViewState extends ConsumerState<HomeView> {
            selectedItemColor: Colors.blue[800],
            onTap: _onBottomNavbarItemTapped,
         ),
-
         appBar: AppBar(
           title: ref.watch(appBarType),
           actions: [
@@ -78,6 +84,14 @@ class HomeViewState extends ConsumerState<HomeView> {
           backgroundColor: Colors.black,
         ),
         body: _views[viewIndex],
+        key: globalScaffold,
+
     );
+  }
+
+  void _onBottomNavbarItemTapped(int index) {
+    ref.read(selectedViewIndex.notifier).state = index;
+    final viewIndex = ref.watch(selectedViewIndex);
+    ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
   }
 }
