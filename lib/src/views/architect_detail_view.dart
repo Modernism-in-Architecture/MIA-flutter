@@ -39,7 +39,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
   Widget build(BuildContext context) {
     final listBuildings = ref.watch(buildingsListDataProvider);
 
-    ListBuildingModel? _getBuildingById(buildingId) {
+    ListBuildingModel? getBuildingById(buildingId) {
       ListBuildingModel? listBuilding;
       listBuildings.whenData((buildings) => {
         for (var building in buildings) {
@@ -98,7 +98,6 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                       if (snapshot.data!.deathCountry.isNotEmpty) Text(snapshot.data!.deathCountry, style: const TextStyle(fontSize: 16)),
                     ]
                 )
-
               ]
           );
 
@@ -122,7 +121,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                       physics: const ScrollPhysics(),
                       itemBuilder: (context, index) {
                         return BuildingListCard(
-                            listBuilding: _getBuildingById(snapshot.data!.relatedBuildings[index].id)
+                            listBuilding: getBuildingById(snapshot.data!.relatedBuildings[index].id)
                         );
                       },
                       itemCount: snapshot.data!.relatedBuildings.length,
