@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/src/views/architects_list_view.dart';
 import 'package:mia/src/views/map_view.dart';
-import '../../main.dart';
 import '../helpers.dart';
+import '../providers.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/custom_title_bar.dart';
 import 'buildings_list_view.dart';
@@ -42,7 +42,6 @@ class HomeViewState extends ConsumerState<HomeView> {
     final viewIndex = ref.watch(selectedViewIndex);
     final titleBarIcon = ref.watch(appBarIcon);
     final globalScaffold = ref.watch(scaffoldHomeViewKey);
-    print(globalScaffold);
 
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(

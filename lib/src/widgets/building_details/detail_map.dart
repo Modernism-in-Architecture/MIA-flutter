@@ -3,10 +3,8 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mia/src/views/home_view.dart';
 
-import '../../../main.dart';
-import '../../views/map_view.dart';
+import '../../providers.dart';
 
 
 class DetailMap extends ConsumerStatefulWidget {
@@ -24,8 +22,6 @@ class DetailMapState extends ConsumerState<DetailMap> {
   @override
   Widget build(BuildContext context) {
 
-    final globalScaffold = ref.watch(scaffoldHomeViewKey);
-
     final markers = <Marker>[
       Marker(
         point: LatLng(widget.latitude, widget.longitude),
@@ -41,18 +37,7 @@ class DetailMapState extends ConsumerState<DetailMap> {
             );
             ref.read(selectedViewIndex.notifier).state = 1;
             ref.read(appBarTitleProvider.notifier).state = titles[1];
-
-            // Navigator.pushNamed(
-            //     globalScaffold.currentContext!,
-            //     RoutesName.homePage
-            // );
-            Navigator.pop(
-              context,
-              // globalScaffold.currentContext!,
-              MaterialPageRoute(
-                builder: (context) => const HomeView(),
-              ),
-            );
+            Navigator.popUntil(context, ModalRoute.withName("/"));
           },
         ),
       )
