@@ -33,6 +33,9 @@ class HomeViewState extends ConsumerState<HomeView> {
         ref.read(mapLocation.notifier).state = MapLocation(
             latitude: userLocation.latitude, longitude: userLocation.longitude
         );
+        ref.read(currentUserLocation.notifier).state = MapLocation(
+            latitude: userLocation.latitude, longitude: userLocation.longitude
+        );
       }
     });
   }
