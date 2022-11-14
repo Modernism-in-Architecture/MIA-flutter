@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/main.dart';
 
+import '../providers.dart';
+
 
 class CustomSearchBar extends ConsumerStatefulWidget{
   const CustomSearchBar({Key? key}) : super(key: key);

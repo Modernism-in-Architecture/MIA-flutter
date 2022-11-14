@@ -12,6 +12,7 @@ import 'package:html/parser.dart' show parse;
 
 import 'architect_detail_view.dart';
 
+
 class BuildingDetailView extends ConsumerStatefulWidget {
   const BuildingDetailView({Key? key, required this.buildingId}) : super(key: key);
   final int buildingId;

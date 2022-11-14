@@ -4,7 +4,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../main.dart';
+import '../providers.dart';
 import '../widgets/loading_screen.dart';
 import '../widgets/maps/map_marker.dart';
 

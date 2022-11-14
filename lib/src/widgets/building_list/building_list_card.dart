@@ -13,11 +13,6 @@ class BuildingListCard extends StatelessWidget{
         children: [
           GestureDetector(
               onTap: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   RoutesName.buildingDetailPage,
-                //   arguments: listBuilding!.id
-                // )
                 Navigator.push(
                   context,
                   MaterialPageRoute(

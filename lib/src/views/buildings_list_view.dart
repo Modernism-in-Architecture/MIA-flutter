@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../main.dart';
 import '../models/list_building_model.dart';
+import '../providers.dart';
 import '../widgets/building_list/list_buildings_view.dart';
 import '../widgets/loading_screen.dart';
 

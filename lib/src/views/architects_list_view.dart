@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mia/main.dart';
 import 'package:mia/src/models/list_architect_model.dart';
 
+import '../providers.dart';
 import '../widgets/architect_list/architect_index_bar.dart';
 import '../widgets/architect_list/architect_name_list.dart';
 import '../widgets/loading_screen.dart';
