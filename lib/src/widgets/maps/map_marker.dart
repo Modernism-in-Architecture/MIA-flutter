@@ -19,7 +19,7 @@ class MapMarkerState extends State<MapMarker> {
     return GestureDetector(
       child: Icon(
         Icons.location_on,
-        color: Colors.blue[800],
+        color: Colors.blue[900],
         size: 42.0,
       ),
       onTap: () {

@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mia/src/widgets/maps/default_marker.dart';
 
 import '../providers.dart';
 import '../widgets/loading_screen.dart';
@@ -22,6 +23,9 @@ class MapViewState extends ConsumerState<MapView> {
   Widget build(BuildContext context) {
     final listBuildings = ref.watch(buildingsListDataProvider);
     final currentLocation = ref.watch(mapLocation);
+    final userLocation = ref.watch(currentUserLocation);
+    final MapController mapController = MapController();
+
     List<Marker> markers = [];
 
     listBuildings.when(
@@ -41,42 +45,83 @@ class MapViewState extends ConsumerState<MapView> {
         loading: () => const LoadingScreen(),
     );
 
-    return FlutterMap(
-      layers: [
-        TileLayerOptions(
-          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: ['a', 'b', 'c'],
-          userAgentPackageName: 'org.architecture-in-modernism',
-        ),
-        MarkerClusterLayerOptions(
-          maxClusterRadius: 80,
-          size: const Size(40, 40),
-          fitBoundsOptions: const FitBoundsOptions(
-            padding: EdgeInsets.all(50),
+    return Stack(
+      children: <Widget>[
+        FlutterMap(
+          mapController: mapController,
+          layers: [
+            TileLayerOptions(
+              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              subdomains: ['a', 'b', 'c'],
+              userAgentPackageName: 'org.architecture-in-modernism',
+            ),
+            MarkerClusterLayerOptions(
+              maxClusterRadius: 80,
+              size: const Size(40, 40),
+              fitBoundsOptions: const FitBoundsOptions(
+                padding: EdgeInsets.all(50),
+              ),
+              markers: markers,
+              polygonOptions: PolygonOptions(
+                  borderColor: Colors.blue[900]!,
+                  color: Colors.black12,
+                  borderStrokeWidth: 1
+              ),
+              builder: (context, markers) {
+                return FloatingActionButton(
+                  heroTag: UniqueKey(),
+                  backgroundColor: Colors.blue[900]!,
+                  onPressed: null,
+                  child: Text(markers.length.toString()),
+                );
+              },
+            ),
+            MarkerLayerOptions(
+                markers: [
+                  Marker(
+                    width: 80,
+                    height: 80,
+                    point: LatLng(
+                        userLocation.latitude!,
+                        userLocation.longitude!
+                    ),
+                    builder: (context) => const DefaultLocationMarker(),
+                  ),
+              ]
+            )
+          ],
+          options: MapOptions(
+            plugins: [
+              MarkerClusterPlugin(),
+            ],
+            center: LatLng(
+                currentLocation.latitude!,
+                currentLocation.longitude!
+            ),
+            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+            zoom: 14,
+            maxZoom: 19,
+            minZoom: 3,
           ),
-          markers: markers,
-          polygonOptions: const PolygonOptions(
-              borderColor: Colors.blueAccent,
-              color: Colors.black12,
-              borderStrokeWidth: 1
-          ),
-          builder: (context, markers) {
-            return FloatingActionButton(
-              heroTag: UniqueKey(),
-              onPressed: null,
-              child: Text(markers.length.toString()),
-            );
-          },
         ),
-      ],
-      options: MapOptions(
-        plugins: [MarkerClusterPlugin(),],
-        center: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-        zoom: 14,
-        maxZoom: 19,
-        minZoom: 3,
-      ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: FloatingActionButton(
+              backgroundColor: Colors.blue[900],
+              onPressed: () {
+                mapController.move(
+                    LatLng(
+                        userLocation.latitude!,
+                        userLocation.longitude!
+                    ), 14);
+              },
+              child: const Icon(Icons.gps_fixed),
+            ),
+          ),
+        )
+      ]
     );
   }
 }
