@@ -43,7 +43,9 @@ class HomeViewState extends ConsumerState<HomeView> {
     final titleBarIcon = ref.watch(appBarIcon);
     final globalScaffold = ref.watch(scaffoldHomeViewKey);
 
-    return Scaffold(
+    return  WillPopScope(
+        onWillPop: showExitPopup,
+        child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
            items: const <BottomNavigationBarItem>[
              BottomNavigationBarItem(
@@ -60,7 +62,7 @@ class HomeViewState extends ConsumerState<HomeView> {
              ),
            ],
            currentIndex: viewIndex,
-           selectedItemColor: Colors.blue[800],
+           selectedItemColor: Colors.blue[900],
            onTap: _onBottomNavbarItemTapped,
         ),
         appBar: AppBar(
@@ -85,6 +87,7 @@ class HomeViewState extends ConsumerState<HomeView> {
         body: _views[viewIndex],
         key: globalScaffold,
 
+    )
     );
   }
 
@@ -92,5 +95,31 @@ class HomeViewState extends ConsumerState<HomeView> {
     ref.read(selectedViewIndex.notifier).state = index;
     final viewIndex = ref.watch(selectedViewIndex);
     ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
+  }
+
+  Future<bool> showExitPopup() async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('EXIT YOUR FAVORITE APP'),
+        content: const Text('Do you really want to exit MIA?'),
+        actions:[
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue[900]!),
+            ),
+            child: const Text('No'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red!),
+            ),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    ) ??false;
   }
 }

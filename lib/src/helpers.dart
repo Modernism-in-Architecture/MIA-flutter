@@ -32,4 +32,3 @@ Future<LocationData?> getCurrentUserLocation() async {
 
   return await location.getLocation();
 }
-
