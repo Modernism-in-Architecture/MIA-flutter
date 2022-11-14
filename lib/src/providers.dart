@@ -21,6 +21,10 @@ final mapLocation = StateProvider<MapLocation>((ref) {
   return _defaultMapLocation;
 });
 
+final currentUserLocation = StateProvider<MapLocation>((ref) {
+  return _defaultMapLocation;
+});
+
 final selectedArchitectId = StateProvider<String>((ref) {
   return "";
 });
