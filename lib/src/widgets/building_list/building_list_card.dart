@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mia/main.dart';
 import '../../models/list_building_model.dart';
 import '../../views/building_detail_view.dart';
 

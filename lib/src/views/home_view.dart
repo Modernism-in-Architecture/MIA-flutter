@@ -116,8 +116,8 @@ class HomeViewState extends ConsumerState<HomeView> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red!),
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
             ),
             child: const Text('Yes'),
           ),

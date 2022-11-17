@@ -64,7 +64,8 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
           ]
         )
     );
-}}
+  }
+}
 
 AnimatedContainer slider(images, pagePosition, active) {
   double margin = active ? 10 : 20;
@@ -74,36 +75,23 @@ AnimatedContainer slider(images, pagePosition, active) {
     curve: Curves.easeInOutCubic,
     margin: EdgeInsets.all(margin),
     decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(images[pagePosition]))),
-  );
-}
-
-imageAnimation(PageController animation, images, pagePosition) {
-  return AnimatedBuilder(
-    animation: animation,
-    builder: (context, widget) {
-      return SizedBox(
-        width: 200,
-        height: 200,
-        child: widget,
-      );
-    },
-    child: Container(
-      margin: const EdgeInsets.all(10),
-      child: Image.network(images[pagePosition]),
+        image: DecorationImage(image: NetworkImage(images[pagePosition]))
     ),
   );
 }
 
 List<Widget> indicators(imagesLength, currentIndex) {
   return List<Widget>.generate(imagesLength, (index) {
-    return Container(
-      margin: const EdgeInsets.all(3),
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-          color: currentIndex == index ? Colors.white : Colors.white24,
-          shape: BoxShape.circle),
+    return Expanded(
+        child: Container(
+          margin: const EdgeInsets.all(3),
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+              color: currentIndex == index ? Colors.white : Colors.white24,
+              shape: BoxShape.circle
+          ),
+        )
     );
   });
 }

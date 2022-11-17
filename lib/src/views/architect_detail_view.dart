@@ -76,7 +76,6 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                         color: Colors.black,
                         size: 20,
                       ),
-
                       const Text(" "),
                       ArchitectLifeInfo(date: snapshot.data!.birthDay, place: snapshot.data!.birthPlace, country: snapshot.data!.birthCountry)
                     ]
