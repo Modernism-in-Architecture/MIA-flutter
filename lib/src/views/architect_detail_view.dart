@@ -7,6 +7,7 @@ import 'package:mia/src/widgets/loading_screen.dart';
 import '../models/detail_architect_model.dart';
 import '../network/mia_api_client.dart';
 import '../providers.dart';
+import '../widgets/architect_list/architect_life_info.dart';
 import '../widgets/building_details/section_header.dart';
 import '../widgets/building_details/section_text_content.dart';
 import '../widgets/building_list/building_list_card.dart';
@@ -70,17 +71,14 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),),
                 Row(
                     children: [
-                      if (snapshot.data!.birthDay.isNotEmpty) const Icon(
+                      if (snapshot.data!.birthDay.isNotEmpty)const Icon(
                         CupertinoIcons.heart_circle,
                         color: Colors.black,
                         size: 20,
                       ),
+
                       const Text(" "),
-                      if (snapshot.data!.birthDay.isNotEmpty) Text(snapshot.data!.birthDay, style: const TextStyle(fontSize: 16)),
-                      if (snapshot.data!.birthPlace.isNotEmpty || snapshot.data!.birthCountry.isNotEmpty) const Text(" in ", style: TextStyle(fontSize: 16)),
-                      if (snapshot.data!.birthPlace.isNotEmpty) Text(snapshot.data!.birthPlace, style: const TextStyle(fontSize: 16)),
-                      if (snapshot.data!.birthCountry.isNotEmpty) const Text(", "),
-                      if (snapshot.data!.birthCountry.isNotEmpty) Text(snapshot.data!.birthCountry, style: const TextStyle(fontSize: 16)),
+                      ArchitectLifeInfo(date: snapshot.data!.birthDay, place: snapshot.data!.birthPlace, country: snapshot.data!.birthCountry)
                     ]
                 ),
                 Row(
@@ -91,11 +89,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                         size: 20,
                       ),
                       const Text(" "),
-                      if (snapshot.data!.deathDay.isNotEmpty) Text(snapshot.data!.deathDay, style: const TextStyle(fontSize: 16)),
-                      if (snapshot.data!.deathPlace.isNotEmpty || snapshot.data!.deathCountry.isNotEmpty) const Text(" in ", style: TextStyle(fontSize: 16)),
-                      if (snapshot.data!.deathPlace.isNotEmpty) Text(snapshot.data!.deathPlace, style: const TextStyle(fontSize: 16)),
-                      if (snapshot.data!.deathCountry.isNotEmpty) const Text(", "),
-                      if (snapshot.data!.deathCountry.isNotEmpty) Text(snapshot.data!.deathCountry, style: const TextStyle(fontSize: 16)),
+                      ArchitectLifeInfo(date: snapshot.data!.deathDay, place: snapshot.data!.deathPlace, country: snapshot.data!.deathCountry)
                     ]
                 )
               ]
