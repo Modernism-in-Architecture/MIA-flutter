@@ -30,6 +30,7 @@ class HomeViewState extends ConsumerState<HomeView> {
     super.initState();
     getCurrentUserLocation().then((userLocation) {
       if (userLocation != null) {
+        ref.read(locationPermissionGrantedByUser.notifier).state = true;
         ref.read(mapLocation.notifier).state = MapLocation(
             latitude: userLocation.latitude, longitude: userLocation.longitude
         );

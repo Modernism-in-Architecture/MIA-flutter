@@ -15,6 +15,10 @@ class MapLocation {
   double? longitude;
 }
 
+final locationPermissionGrantedByUser = StateProvider<bool>((ref) {
+  return false;
+});
+
 final _defaultMapLocation = MapLocation(longitude: 12.3731, latitude: 51.3397);
 
 final mapLocation = StateProvider<MapLocation>((ref) {

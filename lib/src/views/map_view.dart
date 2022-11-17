@@ -24,6 +24,7 @@ class MapViewState extends ConsumerState<MapView> {
     final listBuildings = ref.watch(buildingsListDataProvider);
     final currentLocation = ref.watch(mapLocation);
     final userLocation = ref.watch(currentUserLocation);
+    final userGrantedLocationPermission = ref.watch(locationPermissionGrantedByUser);
     final MapController mapController = MapController();
 
     List<Marker> markers = [];
@@ -44,6 +45,23 @@ class MapViewState extends ConsumerState<MapView> {
         error: (err, s) => Text(err.toString()),
         loading: () => const LoadingScreen(),
     );
+
+    List<Marker> getDefaultMarkerList () {
+      List<Marker> defaultMarkerList = [];
+      if (userGrantedLocationPermission) {
+        defaultMarkerList.add(Marker(
+            width: 80,
+            height: 80,
+            point: LatLng(
+                userLocation.latitude!,
+                userLocation.longitude!
+            ),
+            builder: (context) =>
+                const DefaultLocationMarker()
+        ));
+      }
+      return defaultMarkerList;
+    }
 
     return Stack(
       children: <Widget>[
@@ -77,17 +95,7 @@ class MapViewState extends ConsumerState<MapView> {
               },
             ),
             MarkerLayerOptions(
-                markers: [
-                  Marker(
-                    width: 80,
-                    height: 80,
-                    point: LatLng(
-                        userLocation.latitude!,
-                        userLocation.longitude!
-                    ),
-                    builder: (context) => const DefaultLocationMarker(),
-                  ),
-              ]
+                markers: getDefaultMarkerList()
             )
           ],
           options: MapOptions(
