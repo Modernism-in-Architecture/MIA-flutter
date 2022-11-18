@@ -17,17 +17,12 @@ class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(
-        CupertinoIcons.search,
-        color: Colors.white,
-        size: 28,
-      ),
       title: TextField(
         decoration: const InputDecoration(
           hintText: 'Search...',
           hintStyle: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 16,
             fontStyle: FontStyle.italic,
           ),
           border: InputBorder.none,

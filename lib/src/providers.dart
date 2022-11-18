@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/src/widgets/custom_title_bar.dart';
 
@@ -51,7 +51,7 @@ final searchQueryProvider = StateProvider<String>((ref) {
 });
 
 final appBarIcon = StateProvider<Icon>((ref) {
-  return const Icon(Icons.search);
+  return const Icon(CupertinoIcons.search);
 });
 
 final appBarType = StateProvider<Widget>((ref) {
