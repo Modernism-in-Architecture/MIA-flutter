@@ -42,32 +42,36 @@ class DetailMapState extends ConsumerState<DetailMap> {
         ),
       )
     ];
+
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200,
-            child: FlutterMap(
-              key: ValueKey(MediaQuery.of(context).orientation),
-              options: MapOptions(
-                  center: LatLng(widget.latitude, widget.longitude),
-                  zoom: 13,
-                  maxZoom: 15,
-                  minZoom: 3,
-              ),
-              layers: [
-                TileLayerOptions(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
-                  userAgentPackageName: 'org.architecture-in-modernism',
-                ),
-                MarkerLayerOptions(markers: markers),
-              ],
-            )
-          )
-        ]
-      )
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: Column(
+            children: [
+              SizedBox(
+                  height: 200,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: FlutterMap(
+                          key: ValueKey(MediaQuery.of(context).orientation),
+                          options: MapOptions(
+                              center: LatLng(widget.latitude, widget.longitude),
+                              zoom: 13,
+                              maxZoom: 15,
+                              minZoom: 3,
+                          ),
+                          layers: [
+                            TileLayerOptions(
+                              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              subdomains: ['a', 'b', 'c'],
+                              userAgentPackageName: 'org.architecture-in-modernism',
+                            ),
+                            MarkerLayerOptions(markers: markers),
+                          ],
+                      )
+                  )
+              )
+            ]
+        )
     );
   }
 }
