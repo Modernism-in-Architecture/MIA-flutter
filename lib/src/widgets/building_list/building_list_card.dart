@@ -21,9 +21,10 @@ class BuildingListCard extends StatelessWidget{
               },
               child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: 370,
+                  height: 390,
                   child: Card(
                     elevation: 5,
+                    margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shape: RoundedRectangleBorder(
@@ -33,19 +34,20 @@ class BuildingListCard extends StatelessWidget{
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: 300,
+                          height: 310,
                           child: Image.network(
                             listBuilding!.feedImage,
                             fit: BoxFit.fill,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
                                 Text(
                                   listBuilding!.name,
+                                  style: const TextStyle(fontSize: 16),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
