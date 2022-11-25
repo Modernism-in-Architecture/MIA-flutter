@@ -72,19 +72,25 @@ class HomeViewState extends ConsumerState<HomeView> {
         appBar: AppBar(
           title: ref.watch(appBarType),
           actions: [
-            IconButton(
+            viewIndex != 1 ? IconButton(
               onPressed: () {
                   if (titleBarIcon.icon == CupertinoIcons.search) {
                     ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
                     ref.read(appBarType.notifier).state = const CustomSearchBar();
                   } else {
-                    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.search);
-                    ref.read(appBarType.notifier).state = const CustomTitleBar();
-                    ref.read(searchQueryProvider.notifier).state = "";
+                      ref
+                          .read(appBarIcon.notifier)
+                          .state = const Icon(CupertinoIcons.search);
+                      ref
+                          .read(appBarType.notifier)
+                          .state = const CustomTitleBar();
+                      ref
+                          .read(searchQueryProvider.notifier)
+                          .state = "";
                   }
               },
               icon: titleBarIcon,
-            ),
+            ) : Container(),
           ],
           backgroundColor: Colors.black,
         ),
@@ -97,6 +103,8 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   void _onBottomNavbarItemTapped(int index) {
     ref.read(selectedViewIndex.notifier).state = index;
+    ref.read(appBarType.notifier).state = const CustomTitleBar();
+    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.search);
     final viewIndex = ref.watch(selectedViewIndex);
     ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
   }

@@ -13,9 +13,11 @@ class CustomSearchBar extends ConsumerStatefulWidget{
 
 class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
 
+
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    final viewIndex = ref.watch(selectedViewIndex);
+    return viewIndex != 1 ? ListTile(
       title: TextField(
         decoration: const InputDecoration(
           hintText: 'Search...',
@@ -32,6 +34,6 @@ class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
         onChanged: (value) =>
         ref.read(searchQueryProvider.notifier).state = value,
       ),
-    );
+    ) : Container();
   }
 }
