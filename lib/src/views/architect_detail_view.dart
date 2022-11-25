@@ -82,13 +82,17 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                 ),
                 Row(
                     children: [
-                      if (snapshot.data!.birthDay.isNotEmpty) const Icon(
+                      if (snapshot.data!.deathDay.isNotEmpty) const Icon(
                         CupertinoIcons.heart_slash_circle,
                         color: Colors.black,
                         size: 20,
                       ),
                       const Text(" "),
-                      ArchitectLifeInfo(date: snapshot.data!.deathDay, place: snapshot.data!.deathPlace, country: snapshot.data!.deathCountry)
+                      ArchitectLifeInfo(
+                          date: snapshot.data!.deathDay,
+                          place: snapshot.data!.deathPlace,
+                          country: snapshot.data!.deathCountry
+                      )
                     ]
                 )
               ]
