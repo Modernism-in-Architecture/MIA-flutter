@@ -29,7 +29,7 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child:Row(
                   children: [
                   IconButton(
