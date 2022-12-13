@@ -28,7 +28,6 @@ class MiaApiService {
           headers: _header,
       );
       if (response.statusCode == 200) {
-        log("BUILDING LIST API CALL MADE");
         var jsonResponse = json.decode(response.body);
         List<dynamic> data = jsonResponse["data"];
         return data.map((buildings) => ListBuildingModel.fromJson(buildings)).toList();
@@ -48,7 +47,6 @@ class MiaApiService {
         headers: _header,
       );
       if (response.statusCode == 200) {
-        log("ARCHITECT LIST API CALL MADE");
         var jsonResponse = json.decode(response.body);
         List<dynamic> data = jsonResponse["data"];
         return data.map((architects) => ListArchitectModel.fromJson(architects)).toList();
@@ -68,7 +66,6 @@ class MiaApiService {
         headers: _header,
       );
       if (response.statusCode == 200) {
-        log("DETAIL API CALL MADE");
         Map<String, dynamic> buildingData = jsonDecode(response.body)["data"] as Map<String, dynamic>;
        return DetailBuildingModel.fromJson(buildingData);
       }
@@ -87,7 +84,6 @@ class MiaApiService {
         headers: _header,
       );
       if (response.statusCode == 200) {
-        log("ARCHITECT DETAIL API CALL MADE");
         Map<String, dynamic> architectData = jsonDecode(response.body)["data"] as Map<String, dynamic>;
         return DetailArchitectModel.fromJson(architectData);
       }
