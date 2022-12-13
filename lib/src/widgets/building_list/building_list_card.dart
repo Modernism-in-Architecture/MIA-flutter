@@ -55,17 +55,11 @@ class BuildingListCard extends StatelessWidget{
                                       Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              listBuilding!.city,
-                                              style: const TextStyle(fontSize: 12),
-                                            ),
-                                            const Text(
-                                                ", ",
-                                                style: TextStyle(fontSize: 12)
-                                            ),
-                                            Text(
-                                              listBuilding!.country,
-                                              style: const TextStyle(fontSize: 12),
+                                            Expanded(
+                                              child: Text(
+                                                "${listBuilding!.city}, ${listBuilding!.country}",
+                                                style: const TextStyle(fontSize: 12),
+                                              ),
                                             )
                                           ]
                                       )

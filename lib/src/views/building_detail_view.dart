@@ -98,10 +98,11 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                                 },
                                 child: Row(
                                   children: [
-                                    Text(
+                                    Expanded(
+                                      child: Text(
                                       "${architect.firstName} ${architect.lastName}",
                                       style: const TextStyle(fontSize: 16, decoration: TextDecoration.underline),
-                                    ),
+                                    )),
                                 ]
                               )
                             )
@@ -117,7 +118,9 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                 const SectionHeader(title: "BUILDING"),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Text(snapshot.data!.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: Text(
+                      snapshot.data!.name,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
@@ -130,17 +133,11 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        snapshot.data!.city,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const Text(
-                          ", ",
-                          style: TextStyle(fontSize: 16)
-                      ),
-                      Text(
-                        snapshot.data!.country,
-                        style: const TextStyle(fontSize: 16),
+                      Expanded(
+                        child: Text(
+                          "${snapshot.data!.city}, ${snapshot.data!.country}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       )
                     ]
                 ),
