@@ -21,7 +21,7 @@ class BuildingListCard extends StatelessWidget{
               },
               child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: 390,
+                  height: 395,
                   child: Card(
                     elevation: 5,
                     margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
@@ -40,36 +40,38 @@ class BuildingListCard extends StatelessWidget{
                             fit: BoxFit.fill,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children:[
-                                Text(
-                                  listBuilding!.name,
-                                  style: const TextStyle(fontSize: 16),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Row(
+                        Expanded(
+                            child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                                    children:[
                                       Text(
-                                        listBuilding!.city,
-                                        style: const TextStyle(fontSize: 12),
+                                        listBuilding!.name,
+                                        style: const TextStyle(fontSize: 16),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      const Text(
-                                          ", ",
-                                          style: TextStyle(fontSize: 12)
-                                      ),
-                                      Text(
-                                        listBuilding!.country,
-                                        style: const TextStyle(fontSize: 12),
+                                      Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              listBuilding!.city,
+                                              style: const TextStyle(fontSize: 12),
+                                            ),
+                                            const Text(
+                                                ", ",
+                                                style: TextStyle(fontSize: 12)
+                                            ),
+                                            Text(
+                                              listBuilding!.country,
+                                              style: const TextStyle(fontSize: 12),
+                                            )
+                                          ]
                                       )
                                     ]
-                                )
-                              ]
-                          ),
+                                ),
+                            )
                         )
                       ],
                     ),
