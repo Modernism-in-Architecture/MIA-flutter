@@ -126,9 +126,9 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
                   child: Text(snapshot.data!.buildingType, style: const TextStyle(fontSize: 16)),
                 ),
-                Text(
-                  snapshot.data!.address,
-                  style: const TextStyle(fontSize: 16),
+                SectionTextContent(
+                 content: snapshot.data!.address,
+                  // style: const TextStyle(fontSize: 16),
                 ),
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,8 +145,12 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
                   child: Row(
                     children: [
-                      const Text("Today's use: ", style: TextStyle(fontSize: 16)),
-                      Expanded(child: Text(snapshot.data!.todaysUse, style: const TextStyle(fontSize: 16))),
+                      Expanded(
+                          child: Text(
+                              "Today's use: ${snapshot.data!.todaysUse}",
+                              style: const TextStyle(fontSize: 16)
+                          )
+                      ),
                     ],
                   ),
                 ),
