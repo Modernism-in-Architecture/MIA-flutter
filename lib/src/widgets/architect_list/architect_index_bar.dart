@@ -39,10 +39,24 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
     Set firstLetters = {};
 
     for ( ListArchitectModel architect in resultArchitects ) {
-      firstLetters.add(architect.lastName[0].toUpperCase());
+      var firstLetter = _removeDiacritics(architect.lastName[0]);
+      firstLetters.add(firstLetter.toUpperCase());
     }
 
     _alphabet = firstLetters.toList();
+  }
+
+  _removeDiacritics(String str) {
+    const diacritics =
+        'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËĚèéêëěðČÇçčÐĎďÌÍÎÏìíîïĽľÙÚÛÜŮùúûüůŇÑñňŘřŠšŤťŸÝÿýŽž';
+    const nonDiacritics =
+        'AAAAAAaaaaaaOOOOOOOooooooEEEEEeeeeeeCCccDDdIIIIiiiiLlUUUUUuuuuuNNnnRrSsTtYYyyZz';
+
+    for (int i = 0; i < diacritics.length; i++) {
+      str = str.replaceAll(diacritics[i], nonDiacritics[i]);
+    }
+
+    return str;
   }
 
   _getAlphabetLetter(int letterIndex, List resultArchitects) {
@@ -82,4 +96,5 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
         )
     );
   }
+
 }
