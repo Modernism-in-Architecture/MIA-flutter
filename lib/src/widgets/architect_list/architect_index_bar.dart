@@ -25,16 +25,13 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
     _collectFirstLetters(widget.resultArchitects);
     return Align(
       alignment: Alignment.centerRight,
-      child: Container(
-        color: Colors.transparent,
-        child: Column(
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [...List.generate(
               _alphabet.length, (index) =>
               _getAlphabetLetter(index, widget.resultArchitects))
           ],
         ),
-      ),
     );
   }
 

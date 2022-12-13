@@ -11,21 +11,25 @@ class ArchitectListCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-                children: [
-                  Row(
-                      children: [
-                        Text(architectList[architectIndex].lastName, style: const TextStyle(fontSize: 16)),
-                        if (architectList[architectIndex].firstName != "") const Text(", "),
-                        Text(architectList[architectIndex].firstName, style: const TextStyle(fontSize: 16))
-                      ]
+        elevation: 1,
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: (architectList[architectIndex].firstName != "") ?
+                  Text(
+                    "${architectList[architectIndex].lastName}, ${architectList[architectIndex].firstName}",
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ) : Text(
+                    architectList[architectIndex].lastName,
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   )
-                ]
             )
         )
     );
   }
-
 }

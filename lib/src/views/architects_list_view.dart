@@ -16,7 +16,7 @@ class ArchitectsListView extends ConsumerStatefulWidget {
 
 class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   final ScrollController _controller = ScrollController();
-  static const itemSizeHeight = 65.0;
+  static const itemSizeHeight = 55.0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +52,22 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
       builder: (context, constraints) {
         return Stack(
             children: [
-              ArchitectNameList(
-                  architectList: resultArchitects,
-                  scrollController: _controller,
-                  itemSizeHeight: itemSizeHeight
-              ),
-              ArchitectIndexBar(
-                  resultArchitects: resultArchitects,
-                  scrollController: _controller,
-                  itemSizeHeight: itemSizeHeight
-              )
+                Container(
+                  margin: const EdgeInsets.only(top: 10, left: 10, right: 45),
+                  child: ArchitectNameList(
+                    architectList: resultArchitects,
+                    scrollController: _controller,
+                    itemSizeHeight: itemSizeHeight
+                  )
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 5, top: 10, bottom: 5),
+                  child: ArchitectIndexBar(
+                    resultArchitects: resultArchitects,
+                    scrollController: _controller,
+                    itemSizeHeight: itemSizeHeight
+                  )
+                )
             ]
         );
       },
