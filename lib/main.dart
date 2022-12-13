@@ -21,6 +21,7 @@ class Mia extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Modernism in Architecture',
+      debugShowCheckedModeBanner: false,
       home: const HomeView(),
       theme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(
