@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../models/list_building_model.dart';
 import '../../views/building_detail_view.dart';
+import '../loading_screen.dart';
 
 class BuildingListCard extends StatelessWidget{
   const BuildingListCard({Key? key, this.listBuilding}) : super(key: key);
@@ -38,6 +40,23 @@ class BuildingListCard extends StatelessWidget{
                           child: Image.network(
                             listBuilding!.feedImage,
                             fit: BoxFit.fill,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return const Center(
+                                child: LoadingScreen()
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child:
+                                    Padding(
+                                        padding: const EdgeInsets.all(40.0),
+                                        child: Image.asset("lib/assets/images/mia-logo.png")
+                                    )
+                              );
+                            },
                           ),
                         ),
                         Expanded(
