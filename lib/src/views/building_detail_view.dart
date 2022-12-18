@@ -187,7 +187,16 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   headerImage, buildingContent
                 ],
               ),
-              appBar: AppBar(title: Text(snapshot.data!.name), backgroundColor: Colors.black,),
+              appBar: AppBar(
+                title: Text(
+                    snapshot.data!.name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal
+                    )
+                ),
+                backgroundColor: Colors.black,
+              ),
             );
           }
           else if (snapshot.hasError) {
