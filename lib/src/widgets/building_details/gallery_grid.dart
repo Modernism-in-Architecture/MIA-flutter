@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mia/src/widgets/building_details/gallery_carousel.dart';
 
+import '../loading_screen.dart';
+
 
 class GalleryGrid extends StatelessWidget{
   const GalleryGrid({Key? key, required this.galleryImages}) : super(key: key);
@@ -40,6 +42,23 @@ class GalleryGrid extends StatelessWidget{
                     child: Image.network(
                       galleryImages[index],
                       fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return const Center(
+                            child: LoadingScreen()
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                            child:
+                            Padding(
+                                padding: const EdgeInsets.all(40.0),
+                                child: Image.asset("lib/assets/images/mia-logo.png")
+                            )
+                        );
+                      },
                     ),
                 )
               )
