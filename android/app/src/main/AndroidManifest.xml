@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.modernism_in_architecture.mia">
-   <application
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="mia"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
