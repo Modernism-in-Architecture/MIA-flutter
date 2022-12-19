@@ -2,7 +2,7 @@
     package="org.modernism_in_architecture.mia">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="mia"
+        android:label="Modernism in Architecture"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
