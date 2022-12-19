@@ -28,6 +28,7 @@ class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
           ),
           border: InputBorder.none,
         ),
+        autofocus:true,
         style: const TextStyle(
           color: Colors.white,
         ),
