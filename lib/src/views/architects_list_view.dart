@@ -17,6 +17,30 @@ class ArchitectsListView extends ConsumerStatefulWidget {
 class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   final ScrollController _controller = ScrollController();
   static const itemSizeHeight = 62.0;
+  int _middleItemIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_updateMiddleItemIndex);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_updateMiddleItemIndex);
+    super.dispose();
+  }
+
+  void _updateMiddleItemIndex() {
+    final viewportHeight = MediaQuery.of(context).size.height;
+    final middleOffset = _controller.offset + viewportHeight / 2;
+    final middleItemIndex = middleOffset ~/ 62;
+    if (middleItemIndex != _middleItemIndex) {
+      setState(() {
+        _middleItemIndex = middleItemIndex;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +88,8 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
                   child: ArchitectIndexBar(
                     resultArchitects: resultArchitects,
                     scrollController: _controller,
-                    itemSizeHeight: itemSizeHeight
+                    itemSizeHeight: itemSizeHeight,
+                    middleItemIndex: _middleItemIndex,
                   )
                 )
             ]

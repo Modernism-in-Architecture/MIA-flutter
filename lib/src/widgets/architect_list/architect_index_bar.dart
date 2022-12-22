@@ -5,26 +5,50 @@ import '../../helpers.dart';
 
 
 class ArchitectIndexBar extends StatefulWidget {
-  const ArchitectIndexBar({Key? key, required this.resultArchitects, required this.scrollController, required this.itemSizeHeight})
-      : super(key: key);
 
   final List<ListArchitectModel> resultArchitects;
   final ScrollController scrollController;
   final double itemSizeHeight;
+  final int middleItemIndex;
+
+  const ArchitectIndexBar({
+        Key? key,
+        required this.resultArchitects,
+        required this.scrollController,
+        required this.itemSizeHeight,
+        required this.middleItemIndex
+      }) : super(key: key);
 
   @override
   State<ArchitectIndexBar> createState() => _ArchitectIndexBarState();
+
 }
 
 class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
+  late List _alphabet;
+  late int posSelected;
   String _letter = "A";
   String _oldLetter = "A";
-  int posSelected = 0;
-  late List _alphabet;
+
+  @override
+  void initState() {
+    _collectFirstLetters(widget.resultArchitects);
+    String firstLetter = widget.resultArchitects[widget.middleItemIndex].lastName[0];
+    posSelected = _alphabet.indexOf(firstLetter);
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(ArchitectIndexBar oldWidget) {
+    if (widget.middleItemIndex != oldWidget.middleItemIndex) {
+      String firstLetter = widget.resultArchitects[widget.middleItemIndex].lastName[0];
+      posSelected = _alphabet.indexOf(firstLetter);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
-    _collectFirstLetters(widget.resultArchitects);
     return Align(
       alignment: Alignment.centerRight,
       child: Column(
