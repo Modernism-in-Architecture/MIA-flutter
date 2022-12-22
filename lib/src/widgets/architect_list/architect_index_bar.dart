@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mia/src/models/list_architect_model.dart';
 
+import '../../helpers.dart';
+
 
 class ArchitectIndexBar extends StatefulWidget {
   const ArchitectIndexBar({Key? key, required this.resultArchitects, required this.scrollController, required this.itemSizeHeight})
@@ -39,24 +41,11 @@ class _ArchitectIndexBarState extends State<ArchitectIndexBar> {
     Set firstLetters = {};
 
     for ( ListArchitectModel architect in resultArchitects ) {
-      var firstLetter = _removeDiacritics(architect.lastName[0]);
+      var firstLetter = removeDiacritics(architect.lastName[0]);
       firstLetters.add(firstLetter.toUpperCase());
     }
 
     _alphabet = firstLetters.toList();
-  }
-
-  _removeDiacritics(String str) {
-    const diacritics =
-        'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËĚèéêëěðČÇçčÐĎďÌÍÎÏìíîïĽľÙÚÛÜŮùúûüůŇÑñňŘřŠšŤťŸÝÿýŽž';
-    const nonDiacritics =
-        'AAAAAAaaaaaaOOOOOOOooooooEEEEEeeeeeeCCccDDdIIIIiiiiLlUUUUUuuuuuNNnnRrSsTtYYyyZz';
-
-    for (int i = 0; i < diacritics.length; i++) {
-      str = str.replaceAll(diacritics[i], nonDiacritics[i]);
-    }
-
-    return str;
   }
 
   _getAlphabetLetter(int letterIndex, List resultArchitects) {

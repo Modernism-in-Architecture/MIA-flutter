@@ -8,6 +8,19 @@ String convertToUTF8(String text) {
   return utf8.decode(bytes);
 }
 
+String removeDiacritics(String str) {
+  const diacritics =
+      'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËĚèéêëěðČÇçčÐĎďÌÍÎÏìíîïĽľÙÚÛÜŮùúûüůŇÑñňŘřŠšŤťŸÝÿýŽž';
+  const nonDiacritics =
+      'AAAAAAaaaaaaOOOOOOOooooooEEEEEeeeeeeCCccDDdIIIIiiiiLlUUUUUuuuuuNNnnRrSsTtYYyyZz';
+
+  for (int i = 0; i < diacritics.length; i++) {
+    str = str.replaceAll(diacritics[i], nonDiacritics[i]);
+  }
+
+  return str;
+}
+
 Future<LocationData?> getCurrentUserLocation() async {
   bool serviceEnabled;
   PermissionStatus permissionGranted;
