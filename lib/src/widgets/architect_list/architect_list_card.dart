@@ -10,25 +10,28 @@ class ArchitectListCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    bool firstNameExists = architectList[architectIndex].firstName != "";
+
     return Card(
         elevation: 1,
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: (architectList[architectIndex].firstName != "") ?
-                  Text(
-                    "${architectList[architectIndex].lastName}, ${architectList[architectIndex].firstName}",
-                    style: const TextStyle(fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ) : Text(
-                    architectList[architectIndex].lastName,
-                    style: const TextStyle(fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  )
-            )
+        child: Padding(
+            padding: const EdgeInsets.only(left: 10), //apply padding to all four sides
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: firstNameExists ?
+                    Text(
+                        "${architectList[architectIndex].lastName}, ${architectList[architectIndex].firstName}",
+                        style: const TextStyle(fontSize: 16),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ) : Text(
+                        architectList[architectIndex].lastName,
+                        style: const TextStyle(fontSize: 16),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      )
+                )
         )
     );
   }
