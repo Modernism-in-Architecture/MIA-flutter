@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:html/parser.dart';
 import 'package:mia/src/models/list_building_model.dart';
 import 'package:mia/src/widgets/loading_screen.dart';
+import '../helpers.dart';
 import '../models/detail_architect_model.dart';
 import '../network/mia_api_client.dart';
 import '../providers.dart';
@@ -152,7 +153,16 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                     Text(snapshot.data!.lastName),
                   ]
               ),
-              backgroundColor: Colors.black,),
+              backgroundColor: Colors.black,
+              actions: <Widget>[
+                IconButton(
+                  icon: const Icon(CupertinoIcons.share_up),
+                  onPressed: () {
+                    shareInformation(snapshot.data!.absoluteURL, snapshot.data!.lastName);
+                  },
+                ),
+              ],
+            ),
           );
         } else if (snapshot.hasError) {
             return Text('${snapshot.error}');

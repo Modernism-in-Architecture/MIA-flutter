@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 
 
 String convertToUTF8(String text) {
@@ -20,6 +22,27 @@ String removeDiacritics(String str) {
 
   return str;
 }
+
+class CustomIntent extends Intent {
+
+}
+
+void shareInformation(sharingURL, architect) {
+  String architectName = architect;
+  String msgText = "building";
+  if (architectName != "") {
+    msgText = "architect $architectName";
+  }
+  String msg =
+      "Check out this amazing modernist $msgText!\n"
+      "$sharingURL\n\n"
+      "Sent with ❤️ from my MIA app for Android. "
+      "Download it in your Google Play Store.";
+
+  final FlutterShareMe flutterShareMe = FlutterShareMe();
+  flutterShareMe.shareToSystem(msg: msg);
+}
+
 
 Future<LocationData?> getCurrentUserLocation() async {
   bool serviceEnabled;
