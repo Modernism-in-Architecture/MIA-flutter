@@ -40,6 +40,7 @@ dependencies:
   flutter_map_marker_cluster: ^0.5.4
   location: ^4.4.0
   latlong2: ^0.8.1
+  flutter_share_me: ^1.4.0
 
 dev_dependencies:
   flutter_test:
