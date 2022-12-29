@@ -148,9 +148,21 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
             appBar: AppBar(
               title: Row(
                   children: [
-                    Text(snapshot.data!.firstName),
+                    Text(
+                        snapshot.data!.firstName,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal
+                        )
+                    ),
                     if (snapshot.data!.firstName != "") const Text(" "),
-                    Text(snapshot.data!.lastName),
+                    Text(
+                        snapshot.data!.lastName,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal
+                        )
+                    ),
                   ]
               ),
               backgroundColor: Colors.black,

@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:mia/src/models/list_architect_model.dart';
 
 import '../../helpers.dart';
-import '../../views/architect_detail_view.dart';
 import 'architect_list_card.dart';
+import 'architect_list_section_header.dart';
 
 
 class ArchitectNameList extends StatefulWidget {
-  const ArchitectNameList({Key? key, required this.architectList, required this.scrollController})
-      : super(key: key);
+  const ArchitectNameList({
+    Key? key,
+    required this.architectList,
+    required this.scrollController,
+    required this.itemSizeHeight,
+    required this.letterSectionItemHeight,
+  }) : super(key: key);
 
   final List<ListArchitectModel> architectList;
   final ScrollController scrollController;
+  final double itemSizeHeight;
+  final double letterSectionItemHeight;
 
   @override
   State<ArchitectNameList> createState() => _ArchitectNameListState();
@@ -19,13 +26,13 @@ class ArchitectNameList extends StatefulWidget {
 
 class _ArchitectNameListState extends State<ArchitectNameList> {
 
-
   @override
   Widget build(BuildContext context) {
 
     return ListView.builder(
         itemCount: widget.architectList.length,
         controller: widget.scrollController,
+
         itemBuilder: (context, architectIndex) {
 
           String currentInitialLetter = removeDiacritics(widget.architectList[architectIndex].lastName[0]);
@@ -37,52 +44,20 @@ class _ArchitectNameListState extends State<ArchitectNameList> {
 
           bool isNewLetterSection = predecessorInitialLetter.toLowerCase() != currentInitialLetter.toLowerCase();
 
-          return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ArchitectDetailView(
-                              architectId: widget.architectList[architectIndex].id
-                          ),
-                    ),
-                  );
-                },
-                child: isNewLetterSection ?
-                  Wrap(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                    currentInitialLetter,
-                                    style: const TextStyle(fontSize: 16)
-                                )
-                            ),
-                          ),
-                          SizedBox(
-                            height: 60,
-                            child:
-                              ArchitectListCard(
-                                  architectList: widget.architectList,
-                                  architectIndex: architectIndex
-                              )
-                          )
-                        ]
-                    ) : Wrap(
-                          children: [
-                              SizedBox(
-                                height: 60,
-                                child: ArchitectListCard(
-                                    architectList: widget.architectList,
-                                    architectIndex: architectIndex
-                                )
-                              )
-                          ]
-                    )
-          );
+          return Wrap(
+              children: [
+                  if (isNewLetterSection)
+                      ...[ArchitectListSectionHeader(
+                            currentInitialLetter: currentInitialLetter,
+                            letterSectionItemHeight: widget.letterSectionItemHeight
+                          )],
+                  ArchitectListCard(
+                      architectList: widget.architectList,
+                      architectIndex: architectIndex,
+                      itemSizeHeight: widget.itemSizeHeight,
+                  )
+              ]
+          ) ;
         }
     );
   }
