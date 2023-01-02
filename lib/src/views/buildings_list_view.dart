@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../helpers.dart';
 import '../models/list_building_model.dart';
 import '../providers.dart';
 import '../widgets/building_list/list_buildings_view.dart';
@@ -32,9 +33,9 @@ class BuildingsListViewState extends ConsumerState<BuildingsListView> {
         for (var building in buildings) {
           if (
             searchQuery.isEmpty ||
-            building.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
-            building.city.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-            building.country.toLowerCase().startsWith(searchQuery.toLowerCase())
+            removeDiacritics(building.name).toLowerCase().contains(removeDiacritics(searchQuery.toLowerCase())) ||
+            removeDiacritics(building.city).toLowerCase().startsWith(removeDiacritics(searchQuery.toLowerCase())) ||
+            removeDiacritics(building.country).toLowerCase().startsWith(removeDiacritics(searchQuery.toLowerCase()))
           ){
             resultBuildings.add(building)
           }
