@@ -50,54 +50,54 @@ class HomeViewState extends ConsumerState<HomeView> {
     return  WillPopScope(
         onWillPop: showExitPopup,
         child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-           items: const <BottomNavigationBarItem>[
-             BottomNavigationBarItem(
-               icon: Icon(CupertinoIcons.building_2_fill),
-               label: 'Buildings',
-             ),
-             BottomNavigationBarItem(
-               icon: Icon(CupertinoIcons.map),
-               label: 'Places',
-             ),
-             BottomNavigationBarItem(
-               icon: Icon(CupertinoIcons.person_2_fill),
-               label: 'Architects',
-             ),
-           ],
-           currentIndex: viewIndex,
-           selectedItemColor: Colors.blue[900],
-           onTap: _onBottomNavbarItemTapped,
-        ),
-        appBar: AppBar(
-          title: ref.watch(appBarType),
-          actions: [
-            viewIndex != 1 ? IconButton(
-              onPressed: () {
-                  if (titleBarIcon.icon == CupertinoIcons.search) {
-                    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
-                    ref.read(appBarType.notifier).state = const CustomSearchBar();
-                  } else {
-                      ref
-                          .read(appBarIcon.notifier)
-                          .state = const Icon(CupertinoIcons.search);
-                      ref
-                          .read(appBarType.notifier)
-                          .state = const CustomTitleBar();
-                      ref
-                          .read(searchQueryProvider.notifier)
-                          .state = "";
-                  }
-              },
-              icon: titleBarIcon,
-            ) : Container(),
-          ],
-          backgroundColor: Colors.black,
-        ),
-        body: _views[viewIndex],
-        key: globalScaffold,
-
-    )
+            backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
+            bottomNavigationBar: BottomNavigationBar(
+               items: const <BottomNavigationBarItem>[
+                 BottomNavigationBarItem(
+                   icon: Icon(CupertinoIcons.building_2_fill),
+                   label: 'Buildings',
+                 ),
+                 BottomNavigationBarItem(
+                   icon: Icon(CupertinoIcons.map),
+                   label: 'Places',
+                 ),
+                 BottomNavigationBarItem(
+                   icon: Icon(CupertinoIcons.person_2_fill),
+                   label: 'Architects',
+                 ),
+               ],
+               currentIndex: viewIndex,
+               selectedItemColor: Colors.blue[900],
+               onTap: _onBottomNavbarItemTapped,
+            ),
+            appBar: AppBar(
+              title: ref.watch(appBarType),
+              actions: [
+                viewIndex != 1 ? IconButton(
+                  onPressed: () {
+                      if (titleBarIcon.icon == CupertinoIcons.search) {
+                        ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
+                        ref.read(appBarType.notifier).state = const CustomSearchBar();
+                      } else {
+                          ref
+                              .read(appBarIcon.notifier)
+                              .state = const Icon(CupertinoIcons.search);
+                          ref
+                              .read(appBarType.notifier)
+                              .state = const CustomTitleBar();
+                          ref
+                              .read(searchQueryProvider.notifier)
+                              .state = "";
+                      }
+                  },
+                  icon: titleBarIcon,
+                ) : Container(),
+              ],
+              backgroundColor: Colors.black,
+            ),
+            body: _views[viewIndex],
+            key: globalScaffold,
+        )
     );
   }
 
