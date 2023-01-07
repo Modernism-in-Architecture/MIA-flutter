@@ -47,13 +47,21 @@ class _ArchitectNameListState extends State<ArchitectNameList> {
 
   _renderArchitectGroup(List architectGroup) {
       return Container(
-          margin: const EdgeInsets.only(left: 16.0),
+          margin: const EdgeInsets.only(left: 16.0, right: 8.0),
           padding: const EdgeInsets.only(top: 16.0),
           width: double.infinity,
           decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(8)
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    spreadRadius: 0.1,
+                    blurRadius: 0.1,
+                    offset: const Offset(0.2, 0.2),
+                  ),
+              ],
           ),
           child: Column(
               children: architectGroup.map((architect) =>
