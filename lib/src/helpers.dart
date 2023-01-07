@@ -37,7 +37,7 @@ void shareInformation(sharingURL, architect) {
       "Check out this amazing modernist $msgText!\n"
       "$sharingURL\n\n"
       "Sent with ❤️ from my MIA app for Android. "
-      "Download it in your Google Play Store.";
+      "Get it on Google Play";
 
   final FlutterShareMe flutterShareMe = FlutterShareMe();
   flutterShareMe.shareToSystem(msg: msg);
