@@ -25,7 +25,7 @@ class BuildingListCard extends StatelessWidget{
                   width: MediaQuery.of(context).size.width,
                   height: 395,
                   child: Card(
-                    elevation: 2,
+                    elevation: 1,
                     margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,

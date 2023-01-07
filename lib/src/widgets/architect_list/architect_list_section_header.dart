@@ -26,10 +26,10 @@ class _ArchitectListSectionHeaderState extends State<ArchitectListSectionHeader>
       child: SizedBox(
           height: widget.letterSectionItemHeight,
           child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 25, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 25, 0, 0),
               child: Text(
-                  widget.currentInitialLetter,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                  widget.currentInitialLetter.toUpperCase(),
+                  style: const TextStyle(fontSize: 12)
               )
           )),
     );

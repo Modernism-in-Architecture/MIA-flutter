@@ -15,7 +15,7 @@ class ArchitectNameList extends StatefulWidget {
     required this.letterSectionItemHeight,
   }) : super(key: key);
 
-  final List<ListArchitectModel> architectList;
+  final List<List<ListArchitectModel>> architectList;
   final ScrollController scrollController;
   final double itemSizeHeight;
   final double letterSectionItemHeight;
@@ -28,37 +28,41 @@ class _ArchitectNameListState extends State<ArchitectNameList> {
 
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
-        itemCount: widget.architectList.length,
-        controller: widget.scrollController,
-
-        itemBuilder: (context, architectIndex) {
-
-          String currentInitialLetter = removeDiacritics(widget.architectList[architectIndex].lastName[0]);
-          String predecessorInitialLetter = "-";
-
-          if (architectIndex > 0) {
-            predecessorInitialLetter = removeDiacritics(widget.architectList[architectIndex-1].lastName[0]);
-          }
-
-          bool isNewLetterSection = predecessorInitialLetter.toLowerCase() != currentInitialLetter.toLowerCase();
-
-          return Wrap(
-              children: [
-                  if (isNewLetterSection)
-                      ...[ArchitectListSectionHeader(
-                            currentInitialLetter: currentInitialLetter,
-                            letterSectionItemHeight: widget.letterSectionItemHeight
-                          )],
-                  ArchitectListCard(
-                      architectList: widget.architectList,
-                      architectIndex: architectIndex,
-                      itemSizeHeight: widget.itemSizeHeight,
-                  )
-              ]
-          ) ;
-        }
+      controller: widget.scrollController,
+      itemCount: widget.architectList.length,
+      itemBuilder: (context, index) {
+        return Column(
+            children: [
+                ArchitectListSectionHeader(
+                    currentInitialLetter: removeDiacritics(widget.architectList[index][0].lastName[0]),
+                    letterSectionItemHeight: widget.letterSectionItemHeight
+                ),
+                _renderArchitectGroup(widget.architectList[index])
+            ],
+        );
+      },
     );
+  }
+
+  _renderArchitectGroup(List architectGroup) {
+      return Container(
+          margin: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(top: 16.0),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(8)
+          ),
+          child: Column(
+              children: architectGroup.map((architect) =>
+                ArchitectListCard(
+                    architect: architect,
+                    itemSizeHeight: widget.itemSizeHeight,
+                    isLastOfGroup: architectGroup.indexOf(architect) == architectGroup.length-1,
+                )
+              ).toList()
+          ));
   }
 }

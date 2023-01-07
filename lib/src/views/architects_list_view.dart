@@ -19,11 +19,12 @@ class ArchitectsListView extends ConsumerStatefulWidget {
 
 class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   final ScrollController _listController = ScrollController();
-  static const itemSizeHeight = 63.0;
+  static const itemSizeHeight = 36.0;
   static const letterSectionItemHeight = 50.0;
 
   List _alphabet = [];
-  List<ListArchitectModel> resultArchitects = [];
+  List<List<ListArchitectModel>> groupedArchitectsList = [];
+  List<ListArchitectModel> filteredArchitectList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,24 +32,40 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
     final searchQuery = ref.watch(searchQueryProvider);
 
     if (listArchitects.isLoading) {
-      return const LoadingScreen();
+        return const LoadingScreen();
     }
 
-    List<ListArchitectModel> resultList = [];
+    // Handle search query
+    List<ListArchitectModel> filteredArchitects = [];
 
     listArchitects.whenData((architects) => {
-      for (var architect in architects) {
-        if (searchQuery.isEmpty ||
-            architect.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-            architect.firstName.toLowerCase().startsWith(searchQuery.toLowerCase())
-        ) {
-          resultList.add(architect)
-        }
-      },
-      resultArchitects = resultList
+        for (var architectIndex = 0; architectIndex < architects.length; architectIndex++) {
+            if (searchQuery.isEmpty ||
+                removeDiacritics(architects[architectIndex].lastName.toLowerCase()).startsWith(removeDiacritics(searchQuery.toLowerCase())) ||
+                removeDiacritics(architects[architectIndex].firstName).toLowerCase().startsWith(removeDiacritics(searchQuery.toLowerCase()))
+            ) {
+                filteredArchitects.add(architects[architectIndex]),
+            }
+        },
+
+        filteredArchitectList = filteredArchitects
     });
 
-    if (resultArchitects.isEmpty) {
+    // Build alphabetically grouped architect list
+    Map<String, List<ListArchitectModel>> groupedArchitects = {};
+
+    for (var architect in filteredArchitectList) {
+      String firstLetter = removeDiacritics(architect.lastName[0].toUpperCase());
+      if (!groupedArchitects.containsKey(firstLetter)) {
+        groupedArchitects[firstLetter] = [];
+      }
+      groupedArchitects[firstLetter]?.add(architect);
+    }
+
+    groupedArchitectsList = groupedArchitects.values.toList();
+
+
+    if (groupedArchitectsList.isEmpty) {
       return const Center(
           child: Text("Sorry, no results")
       );
@@ -60,33 +77,32 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
       builder: (context, constraints) {
         return Row(
           children: [
-            Expanded (
-              flex: 10,
-              child:
-                SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: ArchitectNameList(
-                    architectList: resultArchitects,
-                    scrollController: _listController,
-                    itemSizeHeight: itemSizeHeight,
-                    letterSectionItemHeight: letterSectionItemHeight,
+              Expanded(
+                  flex: 10,
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: ArchitectNameList(
+                          architectList: groupedArchitectsList,
+                          scrollController: _listController,
+                          itemSizeHeight: itemSizeHeight,
+                          letterSectionItemHeight: letterSectionItemHeight,
+                      )
                   )
-                )
-            ),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ArchitectIndexBar(
-                    alphabet: _alphabet,
-                    resultArchitects: resultArchitects,
-                    itemSizeHeight: itemSizeHeight,
-                    jumpToPosition: _jumpToSelectedLetter
-                  )
-                ]
               ),
-            )
+              Expanded(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                          ArchitectIndexBar(
+                            alphabet: _alphabet,
+                            resultArchitects: filteredArchitectList,
+                            itemSizeHeight: itemSizeHeight,
+                            jumpToPosition: _jumpToSelectedLetter
+                          )
+                      ]
+                  ),
+              )
           ],
         );
       },
@@ -96,7 +112,7 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   void _collectFirstLetters() {
     Set firstLetters = {};
 
-    for ( ListArchitectModel architect in resultArchitects ) {
+    for ( ListArchitectModel architect in filteredArchitectList ) {
       var firstLetter = removeDiacritics(architect.lastName[0]);
       firstLetters.add(firstLetter.toUpperCase());
     }
@@ -107,19 +123,24 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   }
 
   void _jumpToSelectedLetter(String selectedLetter) {
-    var letterIndex = _alphabet.indexOf(selectedLetter);
+      var letterIndex = _alphabet.indexOf(selectedLetter);
 
-    for (var i = 0; i < resultArchitects.length; i++) {
-      if (selectedLetter.compareTo(removeDiacritics(resultArchitects[i].lastName[0]).toUpperCase()) == 0) {
-        var itemOffset = i * itemSizeHeight + letterIndex * letterSectionItemHeight;
-        _listController.animateTo(
+      var architectsCount = 0;
+      for (var idx = 0; idx < letterIndex; idx++) {
+        architectsCount += groupedArchitectsList[idx].length;
+      }
+
+      var sectionHeights = letterSectionItemHeight.toInt() * letterIndex;
+      var borderOfGroups = 18 * letterIndex;
+      var sumItemSizeHeight = itemSizeHeight * architectsCount;
+
+      var itemOffset = sectionHeights + borderOfGroups + sumItemSizeHeight;
+
+      _listController.animateTo(
             itemOffset,
             curve: Curves.linear,
             duration: const Duration (milliseconds: 500)
-        );
-        break;
-      }
-    }
+      );
   }
 
 }
