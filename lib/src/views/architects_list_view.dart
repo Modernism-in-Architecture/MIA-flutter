@@ -123,18 +123,17 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
   }
 
   void _jumpToSelectedLetter(String selectedLetter) {
-      var letterIndex = _alphabet.indexOf(selectedLetter);
+      int letterIndex = _alphabet.indexOf(selectedLetter);
 
       List<int> groupLengths = groupedArchitectsList.map((group) => group.length).toList();
 
-      var architectsCount = 0;
-      architectsCount = groupLengths.take(letterIndex).fold(0, (a, b) => a + b);
+      int architectsCount = groupLengths.take(letterIndex).fold(0, (a, b) => a + b);
 
-      var sectionHeights = letterSectionItemHeight.toInt() * letterIndex;
-      var borderOfGroups = 18 * letterIndex;
-      var sumItemSizeHeight = itemSizeHeight * architectsCount;
+      int sectionHeights = letterSectionItemHeight.toInt() * letterIndex;
+      int borderOfGroups = 18 * letterIndex;
+      double sumItemSizeHeight = itemSizeHeight * architectsCount;
 
-      var itemOffset = sectionHeights + borderOfGroups + sumItemSizeHeight;
+      double itemOffset = sectionHeights + borderOfGroups + sumItemSizeHeight;
 
       _listController.animateTo(
           itemOffset,
