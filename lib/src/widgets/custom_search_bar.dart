@@ -17,7 +17,7 @@ class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     final viewIndex = ref.watch(selectedViewIndex);
-    return viewIndex != 1 ? ListTile(
+    return viewIndex != 1 || viewIndex != 3 ? ListTile(
       title: TextField(
         decoration: const InputDecoration(
           hintText: 'Search...',
