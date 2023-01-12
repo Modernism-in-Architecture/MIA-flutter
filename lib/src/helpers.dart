@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 
@@ -23,10 +22,6 @@ String removeDiacritics(String str) {
   return str;
 }
 
-class CustomIntent extends Intent {
-
-}
-
 void shareInformation(sharingURL, architect) {
   String architectName = architect;
   String msgText = "building";
@@ -42,7 +37,6 @@ void shareInformation(sharingURL, architect) {
   final FlutterShareMe flutterShareMe = FlutterShareMe();
   flutterShareMe.shareToSystem(msg: msg);
 }
-
 
 Future<LocationData?> getCurrentUserLocation() async {
   bool serviceEnabled;
