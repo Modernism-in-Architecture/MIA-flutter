@@ -41,6 +41,7 @@ dependencies:
   location: ^4.4.0
   latlong2: ^0.8.1
   flutter_share_me: ^1.4.0
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:
