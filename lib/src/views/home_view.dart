@@ -7,6 +7,7 @@ import '../helpers.dart';
 import '../providers.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/custom_title_bar.dart';
+import 'bookmark_view.dart';
 import 'buildings_list_view.dart';
 
 
@@ -22,12 +23,14 @@ class HomeViewState extends ConsumerState<HomeView> {
   final List<Widget> _views = <Widget>[
     const BuildingsListView(),
     const MapView(),
-    const ArchitectsListView()
+    const ArchitectsListView(),
+    const BookmarkView()
   ];
 
   @override
   void initState() {
     super.initState();
+    ref.read(bookmarksProvider).loadBookmarks();
     getCurrentUserLocation().then((userLocation) {
       if (userLocation != null) {
         ref.read(locationPermissionGrantedByUser.notifier).state = true;
@@ -52,28 +55,33 @@ class HomeViewState extends ConsumerState<HomeView> {
         child: Scaffold(
             backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
             bottomNavigationBar: BottomNavigationBar(
-               items: const <BottomNavigationBarItem>[
-                 BottomNavigationBarItem(
-                   icon: Icon(CupertinoIcons.building_2_fill),
-                   label: 'Buildings',
-                 ),
-                 BottomNavigationBarItem(
-                   icon: Icon(CupertinoIcons.map),
-                   label: 'Places',
-                 ),
-                 BottomNavigationBarItem(
-                   icon: Icon(CupertinoIcons.person_2_fill),
-                   label: 'Architects',
-                 ),
-               ],
-               currentIndex: viewIndex,
-               selectedItemColor: Colors.blue[900],
-               onTap: _onBottomNavbarItemTapped,
-            ),
-            appBar: AppBar(
+                items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                        icon: Icon(CupertinoIcons.building_2_fill),
+                        label: 'Buildings',
+                    ),
+                    BottomNavigationBarItem(
+                         icon: Icon(CupertinoIcons.map_fill),
+                         label: 'Places',
+                    ),
+                    BottomNavigationBarItem(
+                         icon: Icon(CupertinoIcons.person_2_fill),
+                         label: 'Architects',
+                       ),
+                       BottomNavigationBarItem(
+                         icon: Icon(CupertinoIcons.bookmark_fill),
+                         label: 'Bookmarks',
+                       ),
+                ],
+                type: BottomNavigationBarType.fixed,
+                currentIndex: viewIndex,
+                selectedItemColor: Colors.blue[900],
+                onTap: _onBottomNavbarItemTapped,
+          ),
+          appBar: AppBar(
               title: ref.watch(appBarType),
               actions: [
-                viewIndex != 1 ? IconButton(
+                (viewIndex == 0 || viewIndex == 2) ? IconButton(
                   onPressed: () {
                       if (titleBarIcon.icon == CupertinoIcons.search) {
                         ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
@@ -97,7 +105,8 @@ class HomeViewState extends ConsumerState<HomeView> {
             ),
             body: _views[viewIndex],
             key: globalScaffold,
-        )
+            resizeToAvoidBottomInset: false,
+          ),
     );
   }
 
@@ -132,6 +141,6 @@ class HomeViewState extends ConsumerState<HomeView> {
           ),
         ],
       ),
-    ) ??false;
+    ) ?? false;
   }
 }
