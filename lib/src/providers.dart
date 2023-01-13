@@ -38,7 +38,6 @@ class Bookmarks<StateProvider> {
       String jsonString = await file.readAsString();
       List<dynamic> jsonData = jsonDecode(jsonString);
       _bookmarks = jsonData.whereType<int>().map((e) => e).toList();
-      print(_bookmarks);
     } catch (e) {
       if (kDebugMode) {
         print(e);
