@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class GalleryCarousel extends StatefulWidget {
   const GalleryCarousel({Key? key, required this.galleryImages, required this.imageIndex}) : super(key: key);
@@ -32,26 +34,31 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
                 padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child:Row(
                   children: [
-                  IconButton(
-                    icon: const Icon(Icons.cancel, color: Colors.white),
-                    onPressed: () {Navigator.pop(context);}
-                  )],
+                    IconButton(
+                      icon: const Icon(Icons.cancel, color: Colors.white),
+                      onPressed: () {Navigator.pop(context);}
+                    )
+                  ],
                 )
             ),
             Expanded(
-              child: PageView.builder(
-                  itemCount: widget.galleryImages.length,
-                  pageSnapping: true,
-                  controller: _pageController,
-                  onPageChanged: (page) {
-                    setState(() {
-                      _activePage = page;
-                    });
-                  },
-                  itemBuilder: (context, pagePosition) {
-                      bool active = pagePosition == _activePage;
-                      return slider(widget.galleryImages, pagePosition, active);
-                  }
+              child: PhotoViewGallery.builder(
+                scrollPhysics: const BouncingScrollPhysics(),
+                builder: (BuildContext context, int index) {
+                  return PhotoViewGalleryPageOptions(
+                    imageProvider: NetworkImage(widget.galleryImages[index]),
+                    initialScale: PhotoViewComputedScale.contained * 0.9,
+                    minScale: PhotoViewComputedScale.contained * 0.8,
+                    maxScale: PhotoViewComputedScale.covered * 1.1,
+                  );
+                },
+                itemCount: widget.galleryImages.length,
+                pageController: _pageController,
+                onPageChanged: (page) {
+                  setState(() {
+                    _activePage = page;
+                  });
+                },
               )
             ),
             Padding(
@@ -65,19 +72,6 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
         )
     );
   }
-}
-
-AnimatedContainer slider(images, pagePosition, active) {
-  double margin = active ? 10 : 20;
-
-  return AnimatedContainer(
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOutCubic,
-    margin: EdgeInsets.all(margin),
-    decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(images[pagePosition]))
-    ),
-  );
 }
 
 List<Widget> indicators(imagesLength, currentIndex) {
