@@ -94,11 +94,14 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                          ArchitectIndexBar(
-                            alphabet: _alphabet,
-                            resultArchitects: filteredArchitectList,
-                            itemSizeHeight: itemSizeHeight,
-                            jumpToPosition: _jumpToSelectedLetter
+                          Expanded(
+                              flex: 10,
+                              child: ArchitectIndexBar(
+                                alphabet: _alphabet,
+                                resultArchitects: filteredArchitectList,
+                                itemSizeHeight: itemSizeHeight,
+                                jumpToPosition: _jumpToSelectedLetter
+                              )
                           )
                       ]
                   ),
