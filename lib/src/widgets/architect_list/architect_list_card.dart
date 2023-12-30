@@ -7,11 +7,11 @@ import '../../views/architect_detail_view.dart';
 
 class ArchitectListCard extends StatelessWidget{
   const ArchitectListCard({
-    Key? key,
+    super.key,
     required this.architect,
     required this.itemSizeHeight,
     required this.isLastOfGroup,
-  }) : super(key: key);
+  });
 
   final ListArchitectModel architect;
   final double itemSizeHeight;
@@ -45,12 +45,12 @@ class ArchitectListCard extends StatelessWidget{
                               flex: 10,
                               child: firstNameExists ? Text(
                                   "${architect.lastName}, ${architect.firstName}",
-                                  style: const TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                               ) : Text(
                                   architect.lastName,
-                                  style: const TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                               )
