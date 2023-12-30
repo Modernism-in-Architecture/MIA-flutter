@@ -12,7 +12,7 @@ import 'buildings_list_view.dart';
 
 
 class HomeView extends ConsumerStatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   HomeViewState createState() => HomeViewState();
@@ -22,7 +22,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   final List<Widget> _views = <Widget>[
     const BuildingsListView(),
-    const MapView(),
+    // const MapView(),
     const ArchitectsListView(),
     const BookmarkView()
   ];
@@ -50,8 +50,8 @@ class HomeViewState extends ConsumerState<HomeView> {
     final titleBarIcon = ref.watch(appBarIcon);
     final globalScaffold = ref.watch(scaffoldHomeViewKey);
 
-    return  WillPopScope(
-        onWillPop: showExitPopup,
+    return PopScope(
+        canPop: false,
         child: Scaffold(
             backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
             bottomNavigationBar: BottomNavigationBar(
@@ -118,29 +118,4 @@ class HomeViewState extends ConsumerState<HomeView> {
     ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
   }
 
-  Future<bool> showExitPopup() async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('EXIT YOUR FAVORITE APP'),
-        content: const Text('Do you really want to exit MIA?'),
-        actions:[
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue[900]!),
-            ),
-            child: const Text('No'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-            ),
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    ) ?? false;
-  }
 }
