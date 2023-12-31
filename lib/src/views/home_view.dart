@@ -22,7 +22,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   final List<Widget> _views = <Widget>[
     const BuildingsListView(),
-    // const MapView(),
+    const MapView(),
     const ArchitectsListView(),
     const BookmarkView()
   ];

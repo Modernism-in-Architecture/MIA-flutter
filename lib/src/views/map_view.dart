@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -9,16 +10,14 @@ import '../providers.dart';
 import '../widgets/loading_screen.dart';
 import '../widgets/maps/map_marker.dart';
 
-
 class MapView extends ConsumerStatefulWidget {
-  const MapView({Key? key}) : super(key: key);
+  const MapView({super.key});
 
   @override
   MapViewState createState() => MapViewState();
 }
 
 class MapViewState extends ConsumerState<MapView> {
-
   @override
   Widget build(BuildContext context) {
     final listBuildings = ref.watch(buildingsListDataProvider);
@@ -35,9 +34,7 @@ class MapViewState extends ConsumerState<MapView> {
             markers.add(
                Marker(
                   point: LatLng(building.latitude, building.longitude),
-                  builder: (BuildContext context) {
-                    return MapMarker(buildingId: building.id);
-                }
+                  child: MapMarker(buildingId: building.id),
               )
             );
           }
@@ -49,16 +46,17 @@ class MapViewState extends ConsumerState<MapView> {
     List<Marker> getDefaultMarkerList () {
       List<Marker> defaultMarkerList = [];
       if (userGrantedLocationPermission) {
-        defaultMarkerList.add(Marker(
-            width: 80,
-            height: 80,
-            point: LatLng(
-                userLocation.latitude!,
-                userLocation.longitude!
-            ),
-            builder: (context) =>
-                const DefaultLocationMarker()
-        ));
+        defaultMarkerList.add(
+            Marker(
+              width: 80,
+              height: 80,
+              point: LatLng(
+                  userLocation.latitude!,
+                  userLocation.longitude!
+              ),
+              child: const DefaultLocationMarker(),
+            )
+        );
       }
       return defaultMarkerList;
     }
@@ -67,67 +65,70 @@ class MapViewState extends ConsumerState<MapView> {
       children: <Widget>[
         FlutterMap(
           mapController: mapController,
-          layers: [
-            TileLayerOptions(
-              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              subdomains: ['a', 'b', 'c'],
-              userAgentPackageName: 'org.architecture-in-modernism',
-            ),
-            MarkerClusterLayerOptions(
-              maxClusterRadius: 80,
-              size: const Size(40, 40),
-              fitBoundsOptions: const FitBoundsOptions(
-                padding: EdgeInsets.all(50),
-              ),
-              markers: markers,
-              polygonOptions: PolygonOptions(
-                  borderColor: Colors.blue[900]!,
-                  color: Colors.black12,
-                  borderStrokeWidth: 1
-              ),
-              builder: (context, markers) {
-                return FloatingActionButton(
-                  heroTag: UniqueKey(),
-                  backgroundColor: Colors.blue[900]!,
-                  onPressed: null,
-                  child: Text(markers.length.toString()),
-                );
-              },
-            ),
-            MarkerLayerOptions(
-                markers: getDefaultMarkerList()
-            )
-          ],
           options: MapOptions(
-            plugins: [
-              MarkerClusterPlugin(),
-            ],
-            center: LatLng(
+            initialCenter: LatLng(
                 currentLocation.latitude!,
                 currentLocation.longitude!
             ),
-            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-            zoom: 14,
-            maxZoom: 19,
-            minZoom: 3,
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: FloatingActionButton(
-              backgroundColor: Colors.blue[900],
-              onPressed: () {
-                mapController.move(
-                    LatLng(
-                        userLocation.latitude!,
-                        userLocation.longitude!
-                    ), 14);
-              },
-              child: const Icon(Icons.gps_fixed),
+            interactionOptions: const InteractionOptions(
+              flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
             ),
+              //boundsOptions: null,
+              initialZoom: 14,
+              maxZoom: 19,
+              minZoom: 3,
           ),
+          children: [
+            TileLayer(
+              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              userAgentPackageName: 'org.architecture-in-modernism',
+            ),
+            MarkerLayer(
+                markers: getDefaultMarkerList()
+            ),
+            MarkerClusterLayerWidget(
+              options: MarkerClusterLayerOptions(
+                maxClusterRadius: 80,
+                size: const Size(30, 30),
+                markers: markers,
+                builder: (context, markers) {
+                  return FloatingActionButton(
+                    heroTag: UniqueKey(),
+                    backgroundColor: Colors.blue[900]!,
+                    onPressed: null,
+                    child: Text(
+                        markers.length.toString(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                        )
+                    ),
+                  );
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FloatingActionButton.small(
+                  backgroundColor: Colors.blue[900]?.withOpacity(0.6),
+                  onPressed: () {
+                    mapController.move(
+                        LatLng(
+                            userLocation.latitude!,
+                            userLocation.longitude!
+                        ), 14);
+                  },
+                  child:
+                    const Icon(
+                      CupertinoIcons.location,
+                      color: Colors.white60,
+                  ),
+                ),
+              ),
+            ),
+          ],
         )
       ]
     );
