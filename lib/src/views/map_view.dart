@@ -73,14 +73,13 @@ class MapViewState extends ConsumerState<MapView> {
             interactionOptions: const InteractionOptions(
               flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
             ),
-              //boundsOptions: null,
-              initialZoom: 14,
-              maxZoom: 19,
-              minZoom: 3,
+            initialZoom: 14,
+            maxZoom: 19,
+            minZoom: 3,
           ),
           children: [
             TileLayer(
-              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               userAgentPackageName: 'org.architecture-in-modernism',
             ),
             MarkerLayer(
