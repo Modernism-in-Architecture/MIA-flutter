@@ -4,7 +4,7 @@ import '../providers.dart';
 
 
 class CustomTitleBar extends ConsumerWidget{
-  const CustomTitleBar({Key? key}) : super(key: key);
+  const CustomTitleBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +20,11 @@ class CustomTitleBar extends ConsumerWidget{
               padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Text(
                   title,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white
+                  ),
               ),
           )
         ]

@@ -5,7 +5,7 @@ import '../providers.dart';
 
 
 class CustomSearchBar extends ConsumerStatefulWidget{
-  const CustomSearchBar({Key? key}) : super(key: key);
+  const CustomSearchBar({super.key});
 
   @override
   CustomSearchBarState createState() => CustomSearchBarState();
@@ -22,7 +22,7 @@ class CustomSearchBarState extends ConsumerState<CustomSearchBar> {
         decoration: const InputDecoration(
           hintText: 'Search...',
           hintStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.white70,
             fontSize: 16,
             fontStyle: FontStyle.italic,
           ),
