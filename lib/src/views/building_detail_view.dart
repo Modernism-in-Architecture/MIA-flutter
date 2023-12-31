@@ -200,9 +200,11 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                           snapshot.data!.name,
                           style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.normal
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white
                           )
                       ),
+                      foregroundColor: Colors.white,
                       backgroundColor: Colors.black,
                       actions: <Widget>[
                           IconButton(
