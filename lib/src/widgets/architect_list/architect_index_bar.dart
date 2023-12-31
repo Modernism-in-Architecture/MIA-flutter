@@ -10,12 +10,12 @@ class ArchitectIndexBar extends StatefulWidget {
   final Function jumpToPosition;
 
   const ArchitectIndexBar({
-        Key? key,
+        super.key,
         required this.alphabet,
         required this.resultArchitects,
         required this.itemSizeHeight,
         required this.jumpToPosition,
-      }) : super(key: key);
+      });
 
   @override
   State<ArchitectIndexBar> createState() => _ArchitectIndexBarState();

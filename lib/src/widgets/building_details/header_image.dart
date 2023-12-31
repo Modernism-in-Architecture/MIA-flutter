@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../loading_screen.dart';
 
 class HeaderImage extends StatelessWidget{
-  const HeaderImage({Key? key, required this.feedImage}) : super(key: key);
+  const HeaderImage({super.key, required this.feedImage});
   final String feedImage;
 
   @override

@@ -5,7 +5,7 @@ import 'building_list_card.dart';
 
 
 class ListBuildingsView extends StatelessWidget{
-  const ListBuildingsView({Key? key, required this.listBuildings}) : super(key: key);
+  const ListBuildingsView({super.key, required this.listBuildings});
 
   final List<ListBuildingModel> listBuildings;
 

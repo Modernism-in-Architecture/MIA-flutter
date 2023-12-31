@@ -4,7 +4,7 @@ import '../../views/building_detail_view.dart';
 
 
 class MapMarker extends StatefulWidget{
-  const MapMarker({Key? key, required this.buildingId}) : super(key: key);
+  const MapMarker({super.key, required this.buildingId});
   final int buildingId;
 
   @override

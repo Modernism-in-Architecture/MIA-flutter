@@ -17,7 +17,7 @@ import 'architect_detail_view.dart';
 
 
 class BuildingDetailView extends ConsumerStatefulWidget {
-  const BuildingDetailView({Key? key, required this.buildingId}) : super(key: key);
+  const BuildingDetailView({super.key, required this.buildingId});
   final int buildingId;
 
   @override

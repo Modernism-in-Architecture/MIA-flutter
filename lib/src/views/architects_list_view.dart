@@ -10,7 +10,7 @@ import '../widgets/loading_screen.dart';
 
 
 class ArchitectsListView extends ConsumerStatefulWidget {
-  const ArchitectsListView({Key? key}) : super(key: key);
+  const ArchitectsListView({super.key});
 
   @override
   ArchitectsListViewState createState() => ArchitectsListViewState();

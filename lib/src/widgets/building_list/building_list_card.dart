@@ -4,7 +4,7 @@ import '../../views/building_detail_view.dart';
 import '../loading_screen.dart';
 
 class BuildingListCard extends StatelessWidget{
-  const BuildingListCard({Key? key, this.listBuilding}) : super(key: key);
+  const BuildingListCard({super.key, this.listBuilding});
   final ListBuildingModel? listBuilding;
 
   @override
