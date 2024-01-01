@@ -201,7 +201,6 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                           style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
-                              color: Colors.white
                           )
                       ),
                       foregroundColor: Colors.white,
