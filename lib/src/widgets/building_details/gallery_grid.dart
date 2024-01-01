@@ -5,7 +5,7 @@ import '../loading_screen.dart';
 
 
 class GalleryGrid extends StatelessWidget{
-  const GalleryGrid({Key? key, required this.galleryImages}) : super(key: key);
+  const GalleryGrid({super.key, required this.galleryImages});
   final List<String> galleryImages;
 
   @override

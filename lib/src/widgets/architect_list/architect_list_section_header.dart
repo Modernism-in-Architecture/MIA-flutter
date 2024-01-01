@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 
 class ArchitectListSectionHeader extends StatefulWidget {
   const ArchitectListSectionHeader({
-    Key? key,
+    super.key,
     required this.currentInitialLetter,
     required this.letterSectionItemHeight,
-    })
-      : super(key: key);
+    });
 
   final String currentInitialLetter;
   final double letterSectionItemHeight;

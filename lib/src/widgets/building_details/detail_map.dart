@@ -1,5 +1,4 @@
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -8,7 +7,7 @@ import '../../providers.dart';
 
 
 class DetailMap extends ConsumerStatefulWidget {
-  const DetailMap({Key? key, required this.latitude, required this.longitude}) : super(key: key);
+  const DetailMap({super.key, required this.latitude, required this.longitude});
   final double latitude;
   final double longitude;
 
@@ -25,7 +24,7 @@ class DetailMapState extends ConsumerState<DetailMap> {
     final markers = <Marker>[
       Marker(
         point: LatLng(widget.latitude, widget.longitude),
-        builder: (context) => GestureDetector(
+        child: GestureDetector(
           child: const Icon(
                 Icons.location_on,
                 color: Colors.blue,
@@ -59,13 +58,14 @@ class DetailMapState extends ConsumerState<DetailMap> {
                               maxZoom: 15,
                               minZoom: 3,
                           ),
-                          layers: [
-                            TileLayerOptions(
-                              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              subdomains: ['a', 'b', 'c'],
+                          children: [
+                            TileLayer(
+                              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                               userAgentPackageName: 'org.architecture-in-modernism',
                             ),
-                            MarkerLayerOptions(markers: markers),
+                            MarkerLayer(
+                                markers: markers
+                            ),
                           ],
                       )
                   )

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class ArchitectLifeInfo extends StatefulWidget {
-  const ArchitectLifeInfo({Key? key, this.date="", this.place="", this.country=""})
-      : super(key: key);
+  const ArchitectLifeInfo({super.key, this.date="", this.place="", this.country=""});
 
   final String date;
   final String place;

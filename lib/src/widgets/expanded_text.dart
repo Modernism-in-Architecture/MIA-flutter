@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExpandedText extends StatefulWidget {
-  const ExpandedText({Key? key, required this.content}) : super(key: key);
+  const ExpandedText({super.key, required this.content});
   final String content;
 
   @override

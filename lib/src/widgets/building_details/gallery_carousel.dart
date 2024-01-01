@@ -3,7 +3,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class GalleryCarousel extends StatefulWidget {
-  const GalleryCarousel({Key? key, required this.galleryImages, required this.imageIndex}) : super(key: key);
+  const GalleryCarousel({super.key, required this.galleryImages, required this.imageIndex});
   final List<String> galleryImages;
   final int imageIndex;
 

@@ -17,7 +17,7 @@ import 'architect_detail_view.dart';
 
 
 class BuildingDetailView extends ConsumerStatefulWidget {
-  const BuildingDetailView({Key? key, required this.buildingId}) : super(key: key);
+  const BuildingDetailView({super.key, required this.buildingId});
   final int buildingId;
 
   @override
@@ -200,9 +200,11 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                           snapshot.data!.name,
                           style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.normal
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white
                           )
                       ),
+                      foregroundColor: Colors.white,
                       backgroundColor: Colors.black,
                       actions: <Widget>[
                           IconButton(

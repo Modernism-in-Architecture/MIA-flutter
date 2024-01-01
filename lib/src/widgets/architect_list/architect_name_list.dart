@@ -8,12 +8,12 @@ import 'architect_list_section_header.dart';
 
 class ArchitectNameList extends StatefulWidget {
   const ArchitectNameList({
-    Key? key,
+    super.key,
     required this.architectList,
     required this.scrollController,
     required this.itemSizeHeight,
     required this.letterSectionItemHeight,
-  }) : super(key: key);
+  });
 
   final List<List<ListArchitectModel>> architectList;
   final ScrollController scrollController;

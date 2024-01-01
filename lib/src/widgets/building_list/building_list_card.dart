@@ -4,7 +4,7 @@ import '../../views/building_detail_view.dart';
 import '../loading_screen.dart';
 
 class BuildingListCard extends StatelessWidget{
-  const BuildingListCard({Key? key, this.listBuilding}) : super(key: key);
+  const BuildingListCard({super.key, this.listBuilding});
   final ListBuildingModel? listBuilding;
 
   @override
@@ -60,7 +60,7 @@ class BuildingListCard extends StatelessWidget{
                                   ),
                                   Expanded(
                                       child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
+                                          padding: const EdgeInsets.all(14.0),
                                           child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children:[

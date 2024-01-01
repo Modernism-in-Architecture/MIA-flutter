@@ -12,7 +12,7 @@ import 'buildings_list_view.dart';
 
 
 class HomeView extends ConsumerStatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   HomeViewState createState() => HomeViewState();
@@ -50,8 +50,8 @@ class HomeViewState extends ConsumerState<HomeView> {
     final titleBarIcon = ref.watch(appBarIcon);
     final globalScaffold = ref.watch(scaffoldHomeViewKey);
 
-    return  WillPopScope(
-        onWillPop: showExitPopup,
+    return PopScope(
+        canPop: false,
         child: Scaffold(
             backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
             bottomNavigationBar: BottomNavigationBar(
@@ -84,12 +84,18 @@ class HomeViewState extends ConsumerState<HomeView> {
                 (viewIndex == 0 || viewIndex == 2) ? IconButton(
                   onPressed: () {
                       if (titleBarIcon.icon == CupertinoIcons.search) {
-                        ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.xmark_circle);
+                        ref.read(appBarIcon.notifier).state = const Icon(
+                            CupertinoIcons.xmark_circle,
+                            color: Colors.white
+                        );
                         ref.read(appBarType.notifier).state = const CustomSearchBar();
                       } else {
                           ref
                               .read(appBarIcon.notifier)
-                              .state = const Icon(CupertinoIcons.search);
+                              .state = const Icon(
+                                CupertinoIcons.search,
+                                color: Colors.white,
+                              );
                           ref
                               .read(appBarType.notifier)
                               .state = const CustomTitleBar();
@@ -113,34 +119,12 @@ class HomeViewState extends ConsumerState<HomeView> {
   void _onBottomNavbarItemTapped(int index) {
     ref.read(selectedViewIndex.notifier).state = index;
     ref.read(appBarType.notifier).state = const CustomTitleBar();
-    ref.read(appBarIcon.notifier).state = const Icon(CupertinoIcons.search);
+    ref.read(appBarIcon.notifier).state = const Icon(
+        CupertinoIcons.search,
+        color: Colors.white,
+    );
     final viewIndex = ref.watch(selectedViewIndex);
     ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
   }
 
-  Future<bool> showExitPopup() async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('EXIT YOUR FAVORITE APP'),
-        content: const Text('Do you really want to exit MIA?'),
-        actions:[
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue[900]!),
-            ),
-            child: const Text('No'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-            ),
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    ) ?? false;
-  }
 }

@@ -7,7 +7,7 @@ import 'building_detail_view.dart';
 
 
 class BookmarkView extends ConsumerStatefulWidget {
-  const BookmarkView({Key? key}) : super(key: key);
+  const BookmarkView({super.key});
 
   @override
   BookmarkViewState createState() => BookmarkViewState();

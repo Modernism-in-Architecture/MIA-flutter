@@ -15,7 +15,7 @@ Future<void> main() async {
 
 
 class Mia extends HookConsumerWidget {
-  const Mia({Key? key}) : super(key: key);
+  const Mia({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

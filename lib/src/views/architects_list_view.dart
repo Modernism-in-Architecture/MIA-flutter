@@ -10,7 +10,7 @@ import '../widgets/loading_screen.dart';
 
 
 class ArchitectsListView extends ConsumerStatefulWidget {
-  const ArchitectsListView({Key? key}) : super(key: key);
+  const ArchitectsListView({super.key});
 
   @override
   ArchitectsListViewState createState() => ArchitectsListViewState();
@@ -94,11 +94,14 @@ class ArchitectsListViewState extends ConsumerState<ArchitectsListView> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                          ArchitectIndexBar(
-                            alphabet: _alphabet,
-                            resultArchitects: filteredArchitectList,
-                            itemSizeHeight: itemSizeHeight,
-                            jumpToPosition: _jumpToSelectedLetter
+                          Expanded(
+                              flex: 10,
+                              child: ArchitectIndexBar(
+                                alphabet: _alphabet,
+                                resultArchitects: filteredArchitectList,
+                                itemSizeHeight: itemSizeHeight,
+                                jumpToPosition: _jumpToSelectedLetter
+                              )
                           )
                       ]
                   ),

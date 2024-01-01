@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mia/src/widgets/expanded_text.dart';
 
 class SectionTextContent extends StatelessWidget{
-  const SectionTextContent({Key? key, required this.content}) : super(key: key);
+  const SectionTextContent({super.key, required this.content});
   final String content;
 
   @override

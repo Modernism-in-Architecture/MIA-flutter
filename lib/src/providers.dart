@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mia/src/widgets/custom_title_bar.dart';
 
@@ -104,7 +105,10 @@ final searchQueryProvider = StateProvider<String>((ref) {
 });
 
 final appBarIcon = StateProvider<Icon>((ref) {
-  return const Icon(CupertinoIcons.search);
+  return const Icon(
+    CupertinoIcons.search,
+    color: Colors.white,
+  );
 });
 
 final appBarType = StateProvider<Widget>((ref) {
