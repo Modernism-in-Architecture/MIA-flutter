@@ -43,6 +43,7 @@ dependencies:
   flutter_share_me: ^1.4.0
   path_provider: ^2.1.1
   photo_view: ^0.14.0
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

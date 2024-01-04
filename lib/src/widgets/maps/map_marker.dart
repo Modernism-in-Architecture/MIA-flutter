@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../views/building_detail_view.dart';
 import '../loading_screen.dart';
@@ -52,23 +53,16 @@ class MapMarkerState extends State<MapMarker> {
               ),
           ),
           child: ClipOval(
-              child: Image.network(
-                  widget.previewImage,
+              child: CachedNetworkImage(
+                  imageUrl: widget.previewImage,
                   fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return const Center(child: LoadingScreen());
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                        child: Padding(
-                            padding: const EdgeInsets.all(1.0),
-                            child: Image.asset("lib/assets/images/mia-logo.png")
-                        )
-                    );
-                  },
+                  placeholder: (context, url) => const Center(child: LoadingScreen()),
+                  errorWidget: (context, url, error) => Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Image.asset("lib/assets/images/mia-logo.png"),
+                    ),
+                  ),
               ),
           )
       ),

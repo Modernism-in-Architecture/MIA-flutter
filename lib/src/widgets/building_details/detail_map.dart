@@ -1,15 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../providers.dart';
+import '../loading_screen.dart';
 
 
 class DetailMap extends ConsumerStatefulWidget {
-  const DetailMap({super.key, required this.latitude, required this.longitude});
+  const DetailMap({
+    super.key,
+    required this.latitude,
+    required this.longitude,
+    required this.previewImage,
+  });
   final double latitude;
   final double longitude;
+  final String previewImage;
 
   @override
   DetailMapState createState() => DetailMapState();
@@ -25,11 +33,6 @@ class DetailMapState extends ConsumerState<DetailMap> {
       Marker(
         point: LatLng(widget.latitude, widget.longitude),
         child: GestureDetector(
-          child: const Icon(
-                Icons.location_on,
-                color: Colors.blue,
-                size: 35.0,
-              ),
           onTap: () {
             ref.read(mapLocation.notifier).state = MapLocation(
               latitude: widget.latitude, longitude: widget.longitude
@@ -38,6 +41,36 @@ class DetailMapState extends ConsumerState<DetailMap> {
             ref.read(appBarTitleProvider.notifier).state = titles[1];
             Navigator.popUntil(context, ModalRoute.withName("/"));
           },
+          child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue[900]!.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                border: Border.all(
+                  color: Colors.blue[900]!,
+                  width: 1.5,
+                ),
+              ),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: widget.previewImage,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(child: LoadingScreen()),
+                  errorWidget: (context, url, error) => Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Image.asset("lib/assets/images/mia-logo.png"),
+                    ),
+                  ),
+                ),
+              )
+          ),
         ),
       )
     ];

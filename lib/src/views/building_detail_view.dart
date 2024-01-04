@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:html/parser.dart' show parse;
+
 import 'package:mia/src/widgets/building_details/detail_map.dart';
 import 'package:mia/src/widgets/building_details/gallery_grid.dart';
 import 'package:mia/src/widgets/building_details/header_image.dart';
 import 'package:mia/src/widgets/building_details/section_text_content.dart';
 import 'package:mia/src/widgets/loading_screen.dart';
+
 import '../helpers.dart';
 import '../models/detail_building_model.dart';
 import '../network/mia_api_client.dart';
 import '../providers.dart';
 import '../widgets/building_details/section_header.dart';
-import 'package:html/parser.dart' show parse;
 
 import 'architect_detail_view.dart';
 
@@ -54,7 +56,11 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SectionHeader(title: "LOCATION"),
-                    DetailMap(latitude: snapshot.data!.latitude, longitude: snapshot.data!.longitude)
+                    DetailMap(
+                        latitude: snapshot.data!.latitude,
+                        longitude: snapshot.data!.longitude,
+                        previewImage: snapshot.data!.galleryImages[0],
+                    )
                   ]
               );
 
