@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mia/src/widgets/building_details/gallery_carousel.dart';
 
@@ -39,26 +40,16 @@ class GalleryGrid extends StatelessWidget{
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      galleryImages[index],
+                    child: CachedNetworkImage(
+                      imageUrl: galleryImages[index],
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return const Center(
-                            child: LoadingScreen()
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return Center(
-                            child:
-                            Padding(
-                                padding: const EdgeInsets.all(40.0),
-                                child: Image.asset("lib/assets/images/mia-logo.png")
-                            )
-                        );
-                      },
+                      placeholder: (context, url) => const Center(child: LoadingScreen()),
+                      errorWidget: (context, url, error) => Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Image.asset("lib/assets/images/mia-logo.png"),
+                        ),
+                      ),
                     ),
                 )
               )
