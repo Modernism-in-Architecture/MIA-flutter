@@ -13,6 +13,7 @@ class ListBuildingModel {
     required this.longitude,
     required this.buildingType,
     required this.feedImage,
+    required this.previewImage,
   });
 
   int id;
@@ -23,6 +24,7 @@ class ListBuildingModel {
   double longitude;
   String buildingType;
   String feedImage;
+  String previewImage;
 
 
   factory ListBuildingModel.fromJson(Map<String, dynamic> json) =>
@@ -35,5 +37,6 @@ class ListBuildingModel {
         longitude: json["longitude"],
         buildingType: convertToUTF8(json["buildingType"]),
         feedImage: json["feedImage"],
+        previewImage: json["previewImage"],
       );
 }
