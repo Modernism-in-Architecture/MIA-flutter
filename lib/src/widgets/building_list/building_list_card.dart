@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../models/list_building_model.dart';
 import '../../views/building_detail_view.dart';
@@ -36,26 +37,16 @@ class BuildingListCard extends StatelessWidget{
                                   SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       height: 310,
-                                      child: Image.network(
-                                          listBuilding!.feedImage,
-                                          fit: BoxFit.fill,
-                                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                  return child;
-                                              }
-                                              return const Center(
-                                                  child: LoadingScreen()
-                                              );
-                                          },
-                                          errorBuilder: (context, error, stackTrace) {
-                                              return Center(
-                                                  child:
-                                                      Padding(
-                                                          padding: const EdgeInsets.all(40.0),
-                                                          child: Image.asset("lib/assets/images/mia-logo.png")
-                                                      )
-                                              );
-                                          },
+                                      child: CachedNetworkImage(
+                                          imageUrl: listBuilding!.feedImage,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) => const Center(child: LoadingScreen()),
+                                          errorWidget: (context, url, error) => Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(1.0),
+                                              child: Image.asset("lib/assets/images/mia-logo.png"),
+                                            ),
+                                          ),
                                       ),
                                   ),
                                   Expanded(
