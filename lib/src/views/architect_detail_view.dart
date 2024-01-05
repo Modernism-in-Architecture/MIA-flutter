@@ -152,7 +152,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                         snapshot.data!.firstName,
                         style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.normal
+                            fontWeight: FontWeight.normal,
                         )
                     ),
                     if (snapshot.data!.firstName != "") const Text(" "),
@@ -160,15 +160,18 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
                         snapshot.data!.lastName,
                         style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.normal
+                            fontWeight: FontWeight.normal,
                         )
                     ),
                   ]
               ),
               backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
               actions: <Widget>[
                 IconButton(
-                  icon: const Icon(CupertinoIcons.share_up),
+                  icon: const Icon(
+                      CupertinoIcons.share_up,
+                  ),
                   onPressed: () {
                     shareInformation(snapshot.data!.absoluteURL, snapshot.data!.lastName);
                   },

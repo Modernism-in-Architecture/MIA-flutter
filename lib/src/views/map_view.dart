@@ -34,7 +34,11 @@ class MapViewState extends ConsumerState<MapView> {
             markers.add(
                Marker(
                   point: LatLng(building.latitude, building.longitude),
-                  child: MapMarker(buildingId: building.id),
+                  child: MapMarker(
+                      buildingId: building.id,
+                      previewImage: building.previewImage,
+                      name: building.name
+                  ),
               )
             );
           }

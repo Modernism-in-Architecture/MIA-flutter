@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../loading_screen.dart';
@@ -11,26 +12,16 @@ class HeaderImage extends StatelessWidget{
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 300,
-      child: Image.network(
-        feedImage,
+      child: CachedNetworkImage(
+        imageUrl: feedImage,
         fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return const Center(
-              child: LoadingScreen()
-          );
-        },
-        errorBuilder: (context, error, stackTrace) {
-          return Center(
-              child:
-              Padding(
-                  padding: const EdgeInsets.all(40.0),
-                  child: Image.asset("lib/assets/images/mia-logo.png")
-              )
-          );
-        },
+        placeholder: (context, url) => const Center(child: LoadingScreen()),
+        errorWidget: (context, url, error) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: Image.asset("lib/assets/images/mia-logo.png"),
+          ),
+        ),
       ),
     );
   }

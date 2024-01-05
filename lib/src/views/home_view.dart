@@ -86,7 +86,6 @@ class HomeViewState extends ConsumerState<HomeView> {
                       if (titleBarIcon.icon == CupertinoIcons.search) {
                         ref.read(appBarIcon.notifier).state = const Icon(
                             CupertinoIcons.xmark_circle,
-                            color: Colors.white
                         );
                         ref.read(appBarType.notifier).state = const CustomSearchBar();
                       } else {
@@ -94,7 +93,6 @@ class HomeViewState extends ConsumerState<HomeView> {
                               .read(appBarIcon.notifier)
                               .state = const Icon(
                                 CupertinoIcons.search,
-                                color: Colors.white,
                               );
                           ref
                               .read(appBarType.notifier)
@@ -108,6 +106,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                 ) : Container(),
               ],
               backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
             ),
             body: _views[viewIndex],
             key: globalScaffold,
@@ -121,7 +120,6 @@ class HomeViewState extends ConsumerState<HomeView> {
     ref.read(appBarType.notifier).state = const CustomTitleBar();
     ref.read(appBarIcon.notifier).state = const Icon(
         CupertinoIcons.search,
-        color: Colors.white,
     );
     final viewIndex = ref.watch(selectedViewIndex);
     ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
