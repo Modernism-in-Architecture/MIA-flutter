@@ -1,17 +1,17 @@
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mia/src/widgets/custom_title_bar.dart';
-
+import 'package:hooks_riverpod/legacy.dart';
 import 'models/list_architect_model.dart';
 import 'models/list_building_model.dart';
 import 'network/mia_api_client.dart';
 import 'package:path_provider/path_provider.dart';
 
-List titles = ["Buildings", "Places", "Architects", "Bookmarks"];
+final List<String> titles = ["Buildings", "Places", "Architects", "Bookmarks"];
 
 class MapLocation {
   MapLocation({required this.longitude, required this.latitude});
@@ -29,49 +29,58 @@ Future<File> get _localFile async {
   return File('$path/bookmarks.json');
 }
 
-class Bookmarks<StateProvider> {
-  List<int> _bookmarks = [];
-  List<int> get bookmarks => _bookmarks;
-
-  Future<void> loadBookmarks() async {
+class BookmarksNotifier extends AsyncNotifier<List<int>> {
+  @override
+  Future<List<int>> build() async {
     try {
       final file = await _localFile;
-      String jsonString = await file.readAsString();
-      List<dynamic> jsonData = jsonDecode(jsonString);
-      _bookmarks = jsonData.whereType<int>().map((e) => e).toList();
+      if (await file.exists()) {
+        final jsonString = await file.readAsString();
+        final data = (jsonDecode(jsonString) as List).whereType<int>().toList();
+        return data;
+      }
     } catch (e) {
       if (kDebugMode) {
-        print(e);
+        print('Bookmarks load error: $e');
+      }
+    }
+    return <int>[];
+  }
+
+  Future<void> _save(List<int> list) async {
+    try {
+      final file = await _localFile;
+      await file.writeAsString(jsonEncode(list));
+    } catch (e) {
+      if (kDebugMode) {
+        print('Bookmarks save error: $e');
       }
     }
   }
 
-  Future<void> saveBookmarks() async {
-    try {
-      final file = await _localFile;
-      String jsonString = jsonEncode(_bookmarks);
-      await file.writeAsString(jsonString);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+  Future<void> add(int id) async {
+    final current = List<int>.from(state.value ?? const <int>[]);
+    if (!current.contains(id)) {
+      current.add(id);
+      state = AsyncData(current);
+      await _save(current);
     }
   }
 
-  void addBookmark(int bookmark) {
-    _bookmarks.add(bookmark);
-    saveBookmarks();
-  }
-
-  void removeBookmark(int bookmark) {
-    _bookmarks.remove(bookmark);
-    saveBookmarks();
+  Future<void> remove(int id) async {
+    final current = List<int>.from(state.value ?? const <int>[]);
+    if (current.remove(id)) {
+      state = AsyncData(current);
+      await _save(current);
+    }
   }
 }
 
-final locationPermissionGrantedByUser = StateProvider<bool>((ref) {
-  return false;
-});
+final bookmarksProvider = AsyncNotifierProvider<BookmarksNotifier, List<int>>(
+  () => BookmarksNotifier(),
+);
+
+final locationPermissionGrantedByUser = StateProvider<bool>((ref) => false);
 
 final _defaultMapLocation = MapLocation(longitude: 12.3731, latitude: 51.3397);
 
@@ -87,9 +96,8 @@ final selectedArchitectId = StateProvider<String>((ref) {
   return "";
 });
 
-GlobalKey globalKey = GlobalKey();
-final scaffoldHomeViewKey = Provider<GlobalKey>((ref) {
-  return globalKey;
+final scaffoldHomeViewKey = Provider<GlobalKey<ScaffoldState>>((ref) {
+  return GlobalKey<ScaffoldState>();
 });
 
 final appBarTitleProvider = StateProvider<String>((ref) {
@@ -104,25 +112,44 @@ final searchQueryProvider = StateProvider<String>((ref) {
   return "";
 });
 
-final appBarIcon = StateProvider<Icon>((ref) {
-  return const Icon(
-    CupertinoIcons.search,
-    color: Colors.white,
-  );
+enum AppBarMode { title, search }
+
+final appBarMode = StateProvider<AppBarMode>((ref) => AppBarMode.title);
+
+final appBarIcon = Provider<IconData>((ref) {
+  return ref.watch(appBarMode) == AppBarMode.title
+      ? CupertinoIcons.search
+      : CupertinoIcons.xmark_circle;
 });
 
-final appBarType = StateProvider<Widget>((ref) {
-  return const CustomTitleBar();
+final buildingsListDataProvider =
+FutureProvider.autoDispose<List<ListBuildingModel>>((ref) async {
+  final link = ref.keepAlive();
+  ref.onDispose(link.close);
+
+  dev.log('START buildingsListDataProvider', name: 'MIA.PROV');
+  ref.onDispose(() => dev.log('DISPOSE buildingsListDataProvider', name: 'MIA.PROV'));
+  ref.onCancel(() => dev.log('CANCEL buildingsListDataProvider', name: 'MIA.PROV'));
+
+  final api = ref.read(miaApiProvider);
+  final data = await api.getBuildings();
+
+  dev.log('DONE buildingsListDataProvider count=${data.length}', name: 'MIA.PROV');
+  return data;
 });
 
-final buildingsListDataProvider = FutureProvider<List<ListBuildingModel>>((ref) async {
-  return ref.read(miaApiProvider).getBuildings();
-});
+final architectsListDataProvider =
+FutureProvider.autoDispose<List<ListArchitectModel>>((ref) async {
+  final link = ref.keepAlive();
+  ref.onDispose(link.close);
 
-final architectsListDataProvider = FutureProvider<List<ListArchitectModel>>((ref) async {
-  return ref.read(miaApiProvider).getArchitects();
-});
+  dev.log('START architectsListDataProvider', name: 'MIA.PROV');
+  ref.onDispose(() => dev.log('DISPOSE architectsListDataProvider', name: 'MIA.PROV'));
+  ref.onCancel(() => dev.log('CANCEL architectsListDataProvider', name: 'MIA.PROV'));
 
-final bookmarksProvider = StateProvider<Bookmarks>((ref) {
-  return Bookmarks();
+  final api = ref.read(miaApiProvider);
+  final data = await api.getArchitects();
+
+  dev.log('DONE architectsListDataProvider count=${data.length}', name: 'MIA.PROV');
+  return data;
 });

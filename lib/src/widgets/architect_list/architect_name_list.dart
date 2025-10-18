@@ -45,7 +45,7 @@ class _ArchitectNameListState extends State<ArchitectNameList> {
     );
   }
 
-  _renderArchitectGroup(List architectGroup) {
+  Container _renderArchitectGroup(List architectGroup) {
       return Container(
           margin: const EdgeInsets.only(left: 16.0, right: 8.0),
           padding: const EdgeInsets.only(top: 16.0),

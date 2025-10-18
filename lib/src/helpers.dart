@@ -1,7 +1,8 @@
+import 'package:share_plus/share_plus.dart';
 import 'dart:convert';
 
 import 'package:location/location.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
+
 
 
 String convertToUTF8(String text) {
@@ -22,20 +23,22 @@ String removeDiacritics(String str) {
   return str;
 }
 
-void shareInformation(sharingURL, architect) {
-  String architectName = architect;
-  String msgText = "building";
-  if (architectName != "") {
-    msgText = "architect $architectName";
-  }
-  String msg =
-      "Check out this amazing modernist $msgText!\n"
-      "$sharingURL\n\n"
-      "Sent with ❤️ from my MIA app for Android. "
-      "Get it on Google Play";
+Future<void> shareInformation(String sharingURL, String architect) async {
+  String architectName = architect.trim();
+  String msgText = architectName.isNotEmpty
+      ? 'architect $architectName'
+      : 'building';
+  final msg = 'Check out this amazing modernist $msgText!\n'
+      '$sharingURL\n\n'
+      'Sent with ❤️ from my MIA app for Android.\n'
+      'Get it on Google Play';
 
-  final FlutterShareMe flutterShareMe = FlutterShareMe();
-  flutterShareMe.shareToSystem(msg: msg);
+  final params = ShareParams(
+    text: msg,
+    title: 'Modernism in Architecture',
+  );
+
+  await SharePlus.instance.share(params);
 }
 
 Future<LocationData?> getCurrentUserLocation() async {

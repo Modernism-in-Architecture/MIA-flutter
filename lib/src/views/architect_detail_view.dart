@@ -27,7 +27,7 @@ class ArchitectDetailViewState extends ConsumerState<ArchitectDetailView> {
 
   late Future<DetailArchitectModel> architect;
 
-  Future<DetailArchitectModel> _getArchitectDetails(architectId) async{
+  Future<DetailArchitectModel> _getArchitectDetails(int architectId) async{
     return ref.read(miaApiProvider).getArchitectDetails(architectId);
   }
 

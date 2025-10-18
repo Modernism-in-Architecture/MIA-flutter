@@ -46,7 +46,7 @@ class DetailMapState extends ConsumerState<DetailMap> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue[900]!.withOpacity(0.5),
+                    color: Colors.blue[900]!.withValues(alpha: 0.5),
                     spreadRadius: 1,
                     blurRadius: 3,
                     offset: const Offset(0, 3),
