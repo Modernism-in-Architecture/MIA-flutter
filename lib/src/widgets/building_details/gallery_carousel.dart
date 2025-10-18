@@ -74,7 +74,7 @@ class _GalleryCarouselState extends State<GalleryCarousel> {
   }
 }
 
-List<Widget> indicators(imagesLength, currentIndex) {
+List<Widget> indicators(int imagesLength, int currentIndex) {
   return List<Widget>.generate(imagesLength, (index) {
     return Expanded(
         child: Container(

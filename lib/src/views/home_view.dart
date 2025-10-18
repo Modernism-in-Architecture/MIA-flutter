@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -30,8 +31,14 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    ref.read(bookmarksProvider).loadBookmarks();
+    dev.log('HomeView.initState()', name: 'MIA.UI');
+    dev.log('Prefetch bookmarksProvider.future', name: 'MIA.UI');
+    ref.read(bookmarksProvider.future);
+    // ref.read(buildingsListDataProvider);
+    // ref.read(architectsListDataProvider);
+
     getCurrentUserLocation().then((userLocation) {
+      dev.log('getCurrentUserLocation() -> ${userLocation != null}', name: 'MIA.UI');
       if (userLocation != null) {
         ref.read(locationPermissionGrantedByUser.notifier).state = true;
         ref.read(mapLocation.notifier).state = MapLocation(
@@ -47,7 +54,9 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     final viewIndex = ref.watch(selectedViewIndex);
-    final titleBarIcon = ref.watch(appBarIcon);
+    // final titleBarIcon = ref.watch(appBarIcon);
+    final mode = ref.watch(appBarMode);
+    final titleBarIconData = ref.watch(appBarIcon);
     final globalScaffold = ref.watch(scaffoldHomeViewKey);
 
     return PopScope(
@@ -79,31 +88,21 @@ class HomeViewState extends ConsumerState<HomeView> {
                 onTap: _onBottomNavbarItemTapped,
           ),
           appBar: AppBar(
-              title: ref.watch(appBarType),
+            title: mode == AppBarMode.title
+                ? const CustomTitleBar()
+                : const CustomSearchBar(),
               actions: [
                 (viewIndex == 0 || viewIndex == 2) ? IconButton(
                   onPressed: () {
-                      if (titleBarIcon.icon == CupertinoIcons.search) {
-                        ref.read(appBarIcon.notifier).state = const Icon(
-                            CupertinoIcons.xmark_circle,
-                        );
-                        ref.read(appBarType.notifier).state = const CustomSearchBar();
-                      } else {
-                          ref
-                              .read(appBarIcon.notifier)
-                              .state = const Icon(
-                                CupertinoIcons.search,
-                              );
-                          ref
-                              .read(appBarType.notifier)
-                              .state = const CustomTitleBar();
-                          ref
-                              .read(searchQueryProvider.notifier)
-                              .state = "";
-                      }
+                    if (mode == AppBarMode.title) {
+                      ref.read(appBarMode.notifier).state = AppBarMode.search;
+                    } else {
+                      ref.read(appBarMode.notifier).state = AppBarMode.title;
+                      ref.read(searchQueryProvider.notifier).state = "";
+                    }
                   },
-                  icon: titleBarIcon,
-                ) : Container(),
+                  icon: Icon(titleBarIconData, color: Colors.white),
+                ) : const SizedBox.shrink(),
               ],
               backgroundColor: Colors.black,
               foregroundColor: Colors.white,
@@ -117,12 +116,12 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   void _onBottomNavbarItemTapped(int index) {
     ref.read(selectedViewIndex.notifier).state = index;
-    ref.read(appBarType.notifier).state = const CustomTitleBar();
-    ref.read(appBarIcon.notifier).state = const Icon(
-        CupertinoIcons.search,
-    );
-    final viewIndex = ref.watch(selectedViewIndex);
-    ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
+    ref.read(selectedViewIndex.notifier).state = index;
+    ref.read(appBarMode.notifier).state = AppBarMode.title; // new
+    ref.read(appBarTitleProvider.notifier).state = titles[index];
+    //final viewIndex = ref.watch(selectedViewIndex);
+    //ref.read(appBarTitleProvider.notifier).state = titles[viewIndex];
+    // ref.read(appBarTitleProvider.notifier).state = titles[index];
   }
 
 }

@@ -19,36 +19,47 @@ class BuildingsListViewState extends ConsumerState<BuildingsListView> {
 
   @override
   Widget build(BuildContext context) {
-    final listBuildings = ref.watch(buildingsListDataProvider);
+    final buildingsAsync = ref.watch(buildingsListDataProvider);
     final searchQuery = ref.watch(searchQueryProvider);
-    List<ListBuildingModel> resultBuildings = [];
 
-    if (listBuildings.isLoading) {
-      return const LoadingScreen();
-    }
+    return buildingsAsync.when(
+      loading: () => const LoadingScreen(),
 
-    // ToDo: Add error handling
+      error: (e, st) => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Failed to load buildings'),
+            const SizedBox(height: 8),
+            Text(
+              e.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12, color: Colors.redAccent),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: () => ref.invalidate(buildingsListDataProvider),
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      ),
 
-    listBuildings.whenData((buildings) => {
-        for (var building in buildings) {
-          if (
-            searchQuery.isEmpty ||
-            removeDiacritics(building.name).toLowerCase().contains(removeDiacritics(searchQuery.toLowerCase())) ||
-            removeDiacritics(building.city).toLowerCase().startsWith(removeDiacritics(searchQuery.toLowerCase())) ||
-            removeDiacritics(building.country).toLowerCase().startsWith(removeDiacritics(searchQuery.toLowerCase()))
-          ){
-            resultBuildings.add(building)
-          }
+      data: (buildings) {
+        final q = removeDiacritics(searchQuery).toLowerCase().trim();
+        final List<ListBuildingModel> filtered = q.isEmpty
+            ? buildings
+            : buildings.where((b) {
+          final name = removeDiacritics(b.name).toLowerCase();
+          final city = removeDiacritics(b.city).toLowerCase();
+          final country = removeDiacritics(b.country).toLowerCase();
+          return name.contains(q) || city.startsWith(q) || country.startsWith(q);
+        }).toList();
+
+        if (filtered.isEmpty) {
+          return const Center(child: Text('Sorry, no results'));
         }
-    });
-
-    if (resultBuildings.isEmpty) {
-        return const Center(
-            child: Text("Sorry, no results")
-        );
-    }
-
-    return ListBuildingsView(listBuildings: resultBuildings);
-
-  }
-}
+        return ListBuildingsView(listBuildings: filtered);
+      },
+    );
+  }}

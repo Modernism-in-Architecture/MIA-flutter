@@ -1,5 +1,3 @@
-import '../helpers.dart';
-
 List<ListArchitectModel> listArchitectModelFromJson(List dynamic) =>
     List<ListArchitectModel>.from(dynamic.map((architect) => ListArchitectModel.fromJson(architect)));
 
@@ -18,7 +16,7 @@ class ListArchitectModel {
   factory ListArchitectModel.fromJson(Map<String, dynamic> json) =>
       ListArchitectModel(
         id: json["id"],
-        lastName: convertToUTF8(json["lastName"]),
-        firstName: convertToUTF8(json["firstName"]),
+        lastName: (json["lastName"] as String?) ?? '',
+        firstName: (json["firstName"] as String?) ?? '',
       );
 }

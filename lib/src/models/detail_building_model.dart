@@ -1,5 +1,3 @@
-import '../helpers.dart';
-
 class DetailBuildingModel {
   DetailBuildingModel({
     required this.id,
@@ -47,22 +45,22 @@ class DetailBuildingModel {
   factory DetailBuildingModel.fromJson(Map<String, dynamic> json) =>
       DetailBuildingModel(
         id: json["id"],
-        name: convertToUTF8(json["name"]),
+        name: (json["name"] as String?) ?? '',
         yearOfConstruction: json["yearOfConstruction"],
         isProtected: json["isProtected"],
-        address: convertToUTF8(json["address"]),
+        address: (json["address"] as String?) ?? '',
         zipCode: json["zipCode"],
-        city: convertToUTF8(json["city"]),
-        country: convertToUTF8(json["country"]),
+        city: (json["city"] as String?) ?? '',
+        country: (json["country"] as String?) ?? '',
         latitude: json["latitude"].toDouble(),
         longitude: json["longitude"].toDouble(),
         galleryImages: List<String>.from(json["galleryImages"].map((x) => x)),
-        subtitle: convertToUTF8(json["subtitle"]),
-        todaysUse: convertToUTF8(json["todaysUse"]),
-        buildingType: convertToUTF8(json["buildingType"]),
-        history: convertToUTF8(json["history"]),
-        description: convertToUTF8(json["description"]),
-        directions: convertToUTF8(json["directions"]),
+        subtitle: (json["subtitle"] as String?) ?? '',
+        todaysUse: (json["todaysUse"] as String?) ?? '',
+        buildingType: (json["buildingType"] as String?) ?? '',
+        history: (json["history"] as String?) ?? '',
+        description: (json["description"] as String?) ?? '',
+        directions: (json["directions"] as String?) ?? '',
         architects: List<Architect>.from(json["architects"].map((x) => Architect.fromJson(x))),
         absoluteURL: json["absoluteURL"],
       );
@@ -82,8 +80,8 @@ class Architect {
 
   factory Architect.fromJson(Map<String, dynamic> json) => Architect(
     id: json["id"],
-    lastName:  convertToUTF8(json["lastName"]),
-    firstName:  convertToUTF8(json["firstName"]),
+    lastName:  (json["lastName"] as String?) ?? '',
+    firstName:  (json["firstName"] as String?) ?? '',
   );
 
 }

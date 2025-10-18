@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:html/parser.dart' show parse;
-
+import 'package:html/parser.dart' as html;
 import 'package:mia/src/widgets/building_details/detail_map.dart';
 import 'package:mia/src/widgets/building_details/gallery_grid.dart';
 import 'package:mia/src/widgets/building_details/header_image.dart';
@@ -32,7 +31,7 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
   late Future<DetailBuildingModel> building;
   late bool isBookmarked;
 
-  Future<DetailBuildingModel> _getBuildingDetails(buildingId) async{
+  Future<DetailBuildingModel> _getBuildingDetails(int buildingId) async{
     return ref.read(miaApiProvider).getBuildingDetails(buildingId);
   }
 
@@ -44,13 +43,14 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    final bookmarkedBuildings = ref.watch(bookmarksProvider);
+    final bookmarksAsync = ref.watch(bookmarksProvider);
 
     return FutureBuilder<DetailBuildingModel>(
         future: building,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-              isBookmarked = bookmarkedBuildings.bookmarks.contains(snapshot.data!.id);
+              final bookmarkedIds = bookmarksAsync.value ?? const <int>[];
+              isBookmarked = bookmarkedIds.contains(snapshot.data!.id);
 
               final locationSection = Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SectionHeader(title: "DESCRIPTION"),
-                    SectionTextContent(content: parse(snapshot.data!.description).body!.text),
+                    SectionTextContent(content: html.parse(snapshot.data!.description).body!.text),
                   ]
               );
 
@@ -84,7 +84,7 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SectionHeader(title: "HISTORY"),
-                    SectionTextContent(content: parse(snapshot.data!.history).body!.text),
+                    SectionTextContent(content: html.parse(snapshot.data!.history).body!.text),
                   ]
               );
 
@@ -216,18 +216,14 @@ class BuildingDetailViewState extends ConsumerState<BuildingDetailView> {
                             icon: isBookmarked ?
                               const Icon(CupertinoIcons.bookmark_fill) :
                               const Icon(CupertinoIcons.bookmark),
-                            onPressed: () {
+                            onPressed: () async {
                               if (!isBookmarked) {
-                                  bookmarkedBuildings.addBookmark(snapshot.data!.id);
-                                  setState(() {
-                                    isBookmarked = true;
-                                  });
+                                await ref.read(bookmarksProvider.notifier).add(snapshot.data!.id);
+                                if (mounted) setState(() { isBookmarked = true; });
                               } else {
-                                  bookmarkedBuildings.removeBookmark(snapshot.data!.id);
-                                  setState(() {
-                                    isBookmarked = false;
-                                  });
-                                }
+                                await ref.read(bookmarksProvider.notifier).remove(snapshot.data!.id);
+                                if (mounted) setState(() { isBookmarked = false; });
+                              }
                             }
                           ),
                           IconButton(

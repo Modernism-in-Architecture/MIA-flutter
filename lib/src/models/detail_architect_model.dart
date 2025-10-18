@@ -1,5 +1,3 @@
-import '../helpers.dart';
-
 class DetailArchitectModel {
   DetailArchitectModel({
     required this.id,
@@ -33,15 +31,15 @@ class DetailArchitectModel {
   factory DetailArchitectModel.fromJson(Map<String, dynamic> json) =>
       DetailArchitectModel(
         id: json["id"],
-        lastName: convertToUTF8(json["lastName"]),
-        firstName: convertToUTF8(json["firstName"]),
+        lastName: (json["lastName"] as String?) ?? '',
+        firstName: (json["firstName"] as String?) ?? '',
         birthDay: json["birthDay"],
-        birthPlace: convertToUTF8(json["birthPlace"]),
-        birthCountry: convertToUTF8(json["birthCountry"]),
-        deathDay: convertToUTF8(json["deathDay"]),
-        deathPlace: convertToUTF8(json["deathPlace"]),
-        deathCountry: convertToUTF8(json["deathCountry"]),
-        description: convertToUTF8(json["description"]),
+        birthPlace: (json["birthPlace"] as String?) ?? '',
+        birthCountry: (json["birthCountry"] as String?) ?? '',
+        deathDay: (json["deathDay"] as String?) ?? '',
+        deathPlace: (json["deathPlace"] as String?) ?? '',
+        deathCountry: (json["deathCountry"] as String?) ?? '',
+        description: (json["description"] as String?) ?? '',
         relatedBuildings: List<RelatedBuilding>.from(json["relatedBuildings"].map((x) => RelatedBuilding.fromJson(x))),
         absoluteURL: json["absoluteURL"],
       );
@@ -69,10 +67,10 @@ class RelatedBuilding {
 
   factory RelatedBuilding.fromJson(Map<String, dynamic> json) => RelatedBuilding(
     id: json["id"],
-    name: convertToUTF8(json["name"]),
+    name: (json["name"] as String?) ?? '',
     yearOfConstruction: json["yearOfConstruction"],
-    city: convertToUTF8(json["city"]),
-    country: convertToUTF8(json["country"]),
+    city: (json["city"] as String?) ?? '',
+    country: (json["country"] as String?) ?? '',
     latitude: json["latitude"].toDouble(),
     longitude: json["longitude"].toDouble(),
   );

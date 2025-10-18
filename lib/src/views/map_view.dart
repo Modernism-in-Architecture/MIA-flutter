@@ -115,7 +115,7 @@ class MapViewState extends ConsumerState<MapView> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: FloatingActionButton.small(
-                  backgroundColor: Colors.blue[900]?.withOpacity(0.6),
+                  backgroundColor: Colors.blue[900]?.withValues(alpha: 0.6),
                   onPressed: () {
                     mapController.move(
                         LatLng(
