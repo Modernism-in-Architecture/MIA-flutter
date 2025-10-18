@@ -16,11 +16,9 @@ class MiaApiService {
 
   final http.Client _client;
 
-  /// Build headers lazily so we read the token *after* dotenv.load()
   Map<String, String> get _headers {
     final token = dotenv.env['MIA_API_TOKEN'];
     if (token == null || token.isEmpty) {
-      // Fail fast so you notice misconfigured env
       throw StateError('MIA_API_TOKEN is missing in .env');
     }
     return <String, String>{
@@ -35,12 +33,10 @@ class MiaApiService {
     return Uri.parse('$base$ver$path');
   }
 
-  /// Decode robustly from bytes to String to JSON
   dynamic _decodeJsonBytes(List<int> bytes) {
     try {
-      return jsonDecode(utf8.decode(bytes)); // prefer UTF-8
+      return jsonDecode(utf8.decode(bytes));
     } on FormatException {
-      // some servers still answer in latin-1; fall back to avoid FormatException
       return jsonDecode(latin1.decode(bytes));
     }
   }
