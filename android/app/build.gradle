@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId = "org.modernism_in_architecture.mia"
         minSdkVersion = flutter.minSdkVersion
-        targetSdk = 35
+        targetSdk = 36
 
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
